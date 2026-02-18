@@ -34,7 +34,7 @@ const Mahamana = () => {
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-[#F4C430] group">
                   {/* Replace src with your actual image path */}
                   <img 
-                    src="/malviyamissionbiharlogo.png" 
+                    src="/malviyaji.png" 
                     alt="Pandit Madan Mohan Malaviya" 
                     className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
                   />
