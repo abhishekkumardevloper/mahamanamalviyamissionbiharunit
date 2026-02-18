@@ -15,7 +15,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-[#F4C430] rounded-full flex items-center justify-center text-[#111111] font-bold text-lg">
-                MMM
+                <img src="malviyamissionbiharlogo.png"></img>
               </div>
               <div>
                 <h3 className="text-[#F4C430] font-bold text-lg" style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}>
