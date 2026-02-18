@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "mahamana": "Mahamana Ji",
+    "objectives": "Objectives",
+    "activities": "Activities",
+    "gallery": "Gallery",
+    "join": "Join Us",
+    "contact": "Contact Us"
+  },
+  "header": {
+    "title": "Mahamana Malaviya Mission – Bihar Unit",
+    "tagline": "Satyamev Jayate | Symbol of Sacrifice, Penance, and Patriotism"
+  },
+  "hero": {
+    "welcome": "Welcome to Mahamana Malaviya Mission (Bihar Unit)",
+    "mission": "Our Mission: Education, Values, and Nation Building",
+    "joinBtn": "Join Us",
+    "newsLabel": "Latest News",
+    "newsText": "Recently, the 15th National Convention was successfully organized at IIT Patna."
+  },
+  "about": {
+    "heading": "Introduction of the Organization",
+    "content1": "Mahamana Malaviya Mission is a national-level organization dedicated to spreading the ideals and thoughts of Bharat Ratna Pandit Madan Mohan Malaviya Ji among society. The mission was established in 1978 with the vision of promoting education, culture, and social service.",
+    "content2": "The Bihar Unit was formed to fulfill Malaviya Ji's vision on the sacred land of Bihar, a region known for its ancient heritage of knowledge and culture.",
+    "missionTitle": "Mission Statement",
+    "missionText": "To build a society where education is combined with strong moral values and patriotism."
+  },
+  "mahamana": {
+    "heading": "Mahamana Pt. Madan Mohan Malaviya Ji – A Visionary Leader",
+    "educationist": "Educationist",
+    "educationistDesc": "Founder of Banaras Hindu University who transformed modern Indian education.",
+    "freedom": "Freedom Fighter",
+    "freedomDesc": "A great patriot and journalist who contributed to India's independence movement.",
+    "cultural": "Cultural Protector",
+    "culturalDesc": "Promoted Sanatan values and worked for the purity of River Ganga.",
+    "quote": "If we want to make our nation great, we must build youth with strong character and patriotism."
+  },
+  "objectives": {
+    "heading": "Our Areas of Work",
+    "character": "Character Building",
+    "characterDesc": "Promoting discipline and moral values among youth.",
+    "culture": "Indian Culture Promotion",
+    "cultureDesc": "Preservation of Hindi language and Indian traditions.",
+    "ganga": "Ganga Cleanliness",
+    "gangaDesc": "Spreading awareness for clean and pure Ganga in Bihar.",
+    "social": "Social Service",
+    "socialDesc": "Raising voice against dowry, untouchability, and social evils.",
+    "cow": "Cow Protection",
+    "cowDesc": "Programs for protection and welfare of cows."
+  },
+  "activities": {
+    "heading": "Activities by Bihar Unit",
+    "jayanti": "Malaviya Jayanti",
+    "jayantiDesc": "Annual celebration on 25 December with seminars and discussions.",
+    "seminars": "Seminars & Workshops",
+    "seminarsDesc": "Programs for students and teachers on nation building.",
+    "education": "Education Support",
+    "educationDesc": "Helping poor and meritorious students.",
+    "convention": "National Convention",
+    "conventionDesc": "Recently, the 15th National Convention was organized at IIT Patna."
+  },
+  "gallery": {
+    "heading": "Photo Gallery",
+    "subheading": "Glimpses of Our Activities"
+  },
+  "leadership": {
+    "heading": "Our Team – Bihar Unit",
+    "patron": "Patron (Sanrakshak)",
+    "president": "President (Adhyaksh)",
+    "secretary": "General Secretary (Mahamantri)",
+    "treasurer": "Treasurer (Koshadhyaksh)",
+    "nationalPresident": "National President: Er. Harishankar Singh Ji"
+  },
+  "join": {
+    "heading": "Join this Noble Mission",
+    "content": "If you are inspired by Malaviya Ji's vision and want to serve society, become a member today.",
+    "name": "Name",
+    "fatherName": "Father's Name",
+    "address": "Address (District, Bihar)",
+    "phone": "Phone Number",
+    "email": "Email",
+    "occupation": "Occupation",
+    "submitBtn": "Submit",
+    "donationTitle": "Donation Details",
+    "accountName": "Account Name",
+    "accountNo": "Account Number",
+    "ifsc": "IFSC Code",
+    "bank": "Bank Name",
+    "successMsg": "Thank you for joining! We will contact you soon.",
+    "errorMsg": "Please fill all required fields."
+  },
+  "contact": {
+    "heading": "Contact Us",
+    "office": "Office Address",
+    "officeAddress": "Mahamana Malaviya Mission, Bihar Unit<br/>Near Gandhi Maidan<br/>Patna, Bihar – 800001",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Office Hours",
+    "hoursText": "Monday - Saturday: 10:00 AM - 6:00 PM"
+  },
+  "footer": {
+    "copyright": "© 2024 Mahamana Malaviya Mission – Bihar Unit. All Rights Reserved.",
+    "tagline": "Education, Values, Nation Building"
+  }
+}

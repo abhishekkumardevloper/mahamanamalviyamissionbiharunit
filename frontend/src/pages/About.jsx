@@ -1,0 +1,48 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+
+const About = () => {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+
+  return (
+    <div className="min-h-screen bg-white">
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#111111] mb-12 text-center" style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}>
+            {t('about.heading')}
+          </h1>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1763262979261-e4ea292a5f8b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHw0fHxJbmRpYW4lMjBlZHVjYXRpb24lMjBoZXJpdGFnZSUyMGN1bHR1cmV8ZW58MHx8fHwxNzcxNDExNDMwfDA&ixlib=rb-4.1.0&q=85"
+                alt="About Us"
+                className="rounded-lg shadow-2xl w-full"
+              />
+            </div>
+            <div>
+              <p className="text-gray-700 text-lg mb-6 leading-relaxed" style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}>
+                {t('about.content1')}
+              </p>
+              <p className="text-gray-700 text-lg leading-relaxed" style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}>
+                {t('about.content2')}
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-[#F4C430] rounded-lg p-8 md:p-12 text-center">
+            <h2 className="text-3xl font-bold text-[#111111] mb-4" style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}>
+              {t('about.missionTitle')}
+            </h2>
+            <p className="text-[#111111] text-xl font-medium max-w-3xl mx-auto" style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}>
+              {t('about.missionText')}
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default About;
