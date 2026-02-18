@@ -33,7 +33,6 @@ const Header = () => {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
             <div className="w-14 h-14 bg-[#F4C430] rounded-full flex items-center justify-center text-[#111111] font-bold text-xl">
-              MMM
             </div>
             <div>
               <h1 className="text-white font-bold text-lg md:text-xl" style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}>
