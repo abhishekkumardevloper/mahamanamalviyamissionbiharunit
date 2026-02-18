@@ -22,10 +22,10 @@
   },
   "about": {
     "heading": "Introduction of the Organization",
-    "content1": "Mahamana Malaviya Mission is a national-level organization dedicated to spreading the ideals and thoughts of Bharat Ratna Pandit Madan Mohan Malaviya Ji among society. The mission was established in 1978 with the vision of promoting education, culture, and social service.",
-    "content2": "The Bihar Unit was formed to fulfill Malaviya Ji's vision on the sacred land of Bihar, a region known for its ancient heritage of knowledge and culture.",
+    "content1": "Mahamana Malaviya Mission is a national-level organization dedicated to spreading the ideals and thoughts of Bharat Ratna Pandit Madan Mohan Malaviya Ji. The Bihar Unit is a dedicated group of alumni from Bihar associated with Banaras Hindu University, along with individuals inspired by its ideals and committed to social service.",
+    "content2": "This unit functions in alignment with the principles and guidance of the national mission. Our core objective is to propagate and practice the vision and nation-building philosophy of Malaviya Ji in every sphere of society.",
     "missionTitle": "Mission Statement",
-    "missionText": "To build a society where education is combined with strong moral values and patriotism."
+    "missionText": "To build a society where education is combined with strong moral values and patriotism, bringing positive and meaningful change in Bihar."
   },
   "mahamana": {
     "heading": "Mahamana Pt. Madan Mohan Malaviya Ji",
@@ -39,27 +39,41 @@
   },
   "objectives": {
     "heading": "Our Areas of Work",
-    "character": "Character Building",
-    "characterDesc": "Promoting discipline and moral values among youth.",
+    "education": "Educational Contribution",
+    "educationDesc": "Providing free materials to underprivileged children and organizing educational camps and lecture series.",
+    "sports": "Sports & Personality",
+    "sportsDesc": "Promoting sports culture, discipline, and leadership through tournaments.",
+    "social": "Social Service & Relief",
+    "socialDesc": "Blanket distribution, flood relief, and assisting underprivileged families during needs.",
     "culture": "Indian Culture Promotion",
     "cultureDesc": "Preservation of Hindi language and Indian traditions.",
-    "ganga": "Ganga Cleanliness",
-    "gangaDesc": "Spreading awareness for clean and pure Ganga in Bihar.",
-    "social": "Social Service",
-    "socialDesc": "Raising voice against dowry, untouchability, and social evils.",
-    "cow": "Cow Protection",
-    "cowDesc": "Programs for protection and welfare of cows."
+    "future_school": "Proposed Malaviya School",
+    "future_schoolDesc": "Establishing a value-based educational institution in the name of Mahamana Ji."
+  },
+  "philosophy": {
+    "title": "Our Core Philosophy",
+    "text": "Mahamana Malviya Ji believed that education is not merely a means of acquiring knowledge but the foundation of character building and nation building. The Bihar Unit embraces this philosophy wholeheartedly."
   },
   "activities": {
     "heading": "Activities by Bihar Unit",
     "jayanti": "Malaviya Jayanti",
     "jayantiDesc": "Annual celebration on 25 December with seminars and discussions.",
-    "seminars": "Seminars & Workshops",
-    "seminarsDesc": "Programs for students and teachers on nation building.",
-    "education": "Education Support",
-    "educationDesc": "Helping poor and meritorious students.",
+    "camps": "Educational & Motivational Camps",
+    "campsDesc": "Guidance and encouragement programs for talented and needy students.",
+    "relief": "Social Impact Initiatives",
+    "reliefDesc": "Active participation in social service and relief work across Bihar.",
     "convention": "National Convention",
     "conventionDesc": "Recently, the 15th National Convention was organized at IIT Patna."
+  },
+  "future_vision": {
+    "heading": "Major Future Initiative",
+    "title": "Establishment of Mahamana Malaviya School",
+    "points": [
+      "Center for holistic and value-based education",
+      "Integration of modern excellence with Indian cultural values",
+      "Focus on moral education and patriotism",
+      "Personality development inspired by Malaviya Ji's ideals"
+    ]
   },
   "gallery": {
     "heading": "Photo Gallery",
