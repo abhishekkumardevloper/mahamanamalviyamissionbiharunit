@@ -20,15 +20,15 @@
     "newsLabel": "Latest News",
     "newsText": "Recently, the 15th National Convention was successfully organized at IIT Patna."
   },
- {
   "about": {
     "heading": "Introduction of the Organization",
     "content1": "Mahamana Malaviya Mission is a national-level organization dedicated to spreading the ideals and thoughts of Bharat Ratna Pandit Madan Mohan Malaviya Ji among society.",
     "content2": "The Bihar Unit was formed to fulfill Malaviya Ji's vision on the sacred land of Bihar, a region known for its ancient heritage of knowledge and culture. It comprises a dedicated group of alumni from Bihar associated with Banaras Hindu University, along with individuals committed to social service.",
-    "content3": "This unit functions in alignment with the principles and guidance of the Mahamana Malviya Mission at the national level.",
+    "content3": "This unit functions in alignment with the principles and guidance of the Mahamana Malaviya Mission at the national level.",
     "missionTitle": "Mission Statement",
-    "missionText": "To build a society where education is combined with strong moral values and patriotism, propagating the ideals, vision, and nation-building philosophy of Mahamana Pandit Madan Mohan Malviya Ji in every sphere of society."
+    "missionText": "To build a society where education is combined with strong moral values and patriotism, propagating the ideals, vision, and nation-building philosophy of Mahamana Pandit Madan Mohan Malaviya Ji in every sphere of society."
   },
+
   "objectives": {
     "heading": "Objectives & Areas of Work",
     "categories": [
@@ -60,6 +60,65 @@
       }
     ]
   },
+
+  "corePhilosophy": {
+    "heading": "Our Core Philosophy",
+    "description": "Mahamana Malaviya Ji believed that education is not merely a means of acquiring knowledge but the foundation of character building and nation building. The Bihar Unit embraces this philosophy and works continuously to bring positive and meaningful change in society."
+  },
+
+  "futureInitiative": {
+    "heading": "Major Future Initiative",
+    "subHeading": "Establishment of a School in the Name of Mahamana Malaviya Ji",
+    "description": "One of the most significant resolutions of the Mahamana Malaviya Mission Bihar Unit is the establishment of this school.",
+    "features": [
+      "Serve as a center for holistic education",
+      "Integrate modern academic excellence with Indian cultural values",
+      "Give equal importance to moral education, patriotism, and personality development",
+      "Follow a value-based education system inspired by the ideals of Malaviya Ji"
+    ]
+  },
+
+  "commitment": {
+    "heading": "Our Commitment",
+    "description": "Our aim is not limited to organizing programs; we are committed to creating lasting and meaningful social impact. By spreading the ideals of Mahamana, we strive to contribute toward building an educated, cultured, and empowered Bihar."
+  },
+
+  "leadership": {
+    "heading": "Visionary Leadership & Organizational Strength",
+    "leaderName": "Shri Bipin Kumar Singh",
+    "philosophy": "His leadership style is rooted in coordination, communication, and positive engagement. He envisions the mission not merely as an organization that conducts programs, but as a powerful ideological movement dedicated to nation-building.",
+    "achievements": [
+      "The organizational structure has been strengthened",
+      "Youth participation has significantly increased",
+      "District-level units have been expanded and made more active"
+    ],
+    "idealsPromotion": "He firmly believes that education, values, and service to the nation form the foundation of a strong India. He presents Malaviya Ji’s principles in a modern context, inspiring the younger generation."
+  },
+
+  "keyEvents": {
+    "heading": "Key Events & Programs",
+    "events": [
+      {
+        "title": "National Meeting 2024 – Patna",
+        "description": "A prestigious national-level meeting of the mission was successfully organized in Patna. This event marked a historic milestone for the Bihar Unit, showcasing its capability to host and manage national-level programs efficiently. Delegates and dignitaries discussed strategic plans and future directions."
+      },
+      {
+        "title": "Mahamana Hockey Gold Cup 2026 – Rajgir",
+        "description": "An upcoming highly commendable initiative. This is not merely a sports tournament, but a platform to promote discipline, leadership, and patriotism among youth. Through sports, Shri Singh aims to foster unity and positive energy in society."
+      }
+    ],
+    "annualPrograms": {
+      "title": "Annual Lectures & Ideological Programs",
+      "description": "Under his leadership, annual lectures, seminars, and cultural programs are organized regularly to spread the ideals of Madan Mohan Malaviya.",
+      "focusAreas": [
+        "Nationalism and value-based education",
+        "Youth empowerment and leadership development",
+        "Social harmony and cultural awakening"
+      ]
+    }
+  }
+}
+
   "corePhilosophy": {
     "heading": "Our Core Philosophy",
     "description": "Mahamana Malviya Ji believed that education is not merely a means of acquiring knowledge but the foundation of character building and nation building. The Bihar Unit embraces this philosophy and works continuously to bring positive and meaningful change in society."
