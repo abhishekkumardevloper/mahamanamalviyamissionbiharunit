@@ -37,11 +37,11 @@ const Team = () => {
       headline: "Patrons (संरक्षक)", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
-        { id: 24, image: "/images/team24.jpg", designation: "Former IAS, Bihar", name: "Shri R. U. Singh" },
-        { id: 25, image: "/images/team25.jpg", designation: "Former Information Commissioner, Bihar", name: "Shri O. P. Srivastava" },
-        { id: 26, image: "/images/team26.jpg", designation: "MLC, Bihar Legislative Council", name: "Shri Omprakash Yadav" },
-        { id: 27, image: "/images/team27.jpg", designation: "Former President, Mahamana Malaviya Mission Bihar", name: "Shri Uday Singh" },
-        { id: 28, image: "/images/team28.jpg", designation: "Director, IIT Patna", name: "Prof. T. N. Singh" }
+        { id: 24, image: "/images/team24.jpg", designation: "Patrons", name: "Shri R. U. Singh" },
+        { id: 25, image: "/images/team25.jpg", designation: "Patrons, Bihar", name: "Shri O. P. Srivastava" },
+        { id: 26, image: "/images/team26.jpg", designation: "Patrons", name: "Shri Omprakash Yadav" },
+        { id: 27, image: "/images/team27.jpg", designation: "Patrons", name: "Shri Uday Singh" },
+        { id: 28, image: "/images/team28.jpg", designation: "Patrons", name: "Prof. T. N. Singh" }
       ]
     },
     {
@@ -60,7 +60,7 @@ const Team = () => {
         { id: 36, image: "/images/team36.jpg", designation: "Advisor", name: "Dr. Arvind Gupta" },
         { id: 37, image: "/images/team37.jpg", designation: "Advisor", name: "Shri Ravindra Upadhyay" },
         { id: 38, image: "/images/team38.jpg", designation: "Advisor", name: "Shri Rajnikant" },
-        { id: 39, image: "/images/team39.jpg", designation: "AIIMS Patna", name: "Dr. Anand Rai" },
+        { id: 39, image: "/images/team39.jpg", designation: "Advisor", name: "Dr. Anand Rai" },
         { id: 39, image: "/images/team39.jpg", designation: "Advisor", name: "Dr. Shivendra Jaiswal" },
         { id: 40, image: "/images/team40.jpg", designation: "Advisor", name: "Dr. Vimlendu Singh" }
       ]
