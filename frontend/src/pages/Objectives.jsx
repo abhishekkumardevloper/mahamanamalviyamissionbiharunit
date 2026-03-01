@@ -50,9 +50,9 @@ const Team = () => {
       // 12 members fit perfectly into a 4-column grid (3 rows)
       gridClass: 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
-        { id: 29, image: "/images/team29.jpg", designation: "Advisor", name: "Shri Mithilesh Mishra" },
+        { id: 29, image: "/images/team29.jpg", designation: "Advisor", name: "Shri Mithilesh Mishra, IAS" },
         { id: 30, image: "/images/team30.jpg", designation: "Advisor", name: "Shri Baidyanath Yadav" },
-        { id: 31, image: "/images/team31.jpg", designation: "Advisor", name: "Shri Sanjay Kumar Singh" },
+        { id: 31, image: "/images/team31.jpg", designation: "Advisor", name: "Shri Sanjay Kumar Singh, IPS" },
         { id: 32, image: "/images/team32.jpg", designation: "Advisor", name: "Shri Rakesh Malhotra" },
         { id: 33, image: "/images/team33.jpg", designation: "Advisor", name: "Shri Rajeshwar Dubey" },
         { id: 34, image: "/images/team34.jpg", designation: "Advisor", name: "Shri Ashwani Kumar Singh" },
@@ -61,6 +61,7 @@ const Team = () => {
         { id: 37, image: "/images/team37.jpg", designation: "Advisor", name: "Shri Ravindra Upadhyay" },
         { id: 38, image: "/images/team38.jpg", designation: "Advisor", name: "Shri Rajnikant" },
         { id: 39, image: "/images/team39.jpg", designation: "AIIMS Patna", name: "Dr. Anand Rai" },
+        { id: 39, image: "/images/team39.jpg", designation: "Advisor", name: "Dr. Shivendra Jaiswal" },
         { id: 40, image: "/images/team40.jpg", designation: "Advisor", name: "Dr. Vimlendu Singh" }
       ]
     }
