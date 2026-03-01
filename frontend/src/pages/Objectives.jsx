@@ -34,7 +34,7 @@ const Team = () => {
     },
     {
       id: 'group5',
-      headline: "Patrons (संरक्षक)", 
+      headline: "Board of Patrons", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
         { id: 24, image: "/images/team24.jpg", designation: "Patrons", name: "Shri R. U. Singh" },
@@ -46,7 +46,7 @@ const Team = () => {
     },
     {
       id: 'group6',
-      headline: "Advisory Committee (सलाहकार समिति)", 
+      headline: "Advisory Committee", 
       // 12 members fit perfectly into a 4-column grid (3 rows)
       gridClass: 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
