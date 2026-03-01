@@ -197,6 +197,48 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Donation Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-[#F4C430]">
+            <div className="flex flex-col md:flex-row items-center p-8 md:p-12 gap-8">
+              {/* Left Side: Donation Text */}
+              <div className="w-full md:w-3/5">
+                <h2 className="text-3xl md:text-4xl font-bold text-[#111111] mb-4" style={getFontStyle()}>
+                  {t('donation.title') || 'Support Our Cause'}
+                </h2>
+                <p className="text-gray-700 text-lg mb-6 leading-relaxed" style={getFontStyle()}>
+                  {t('donation.description') || 'Your generous contributions help us sustain our programs and reach more people in need. Scan the QR code to make a secure donation directly to our initiative.'}
+                </p>
+                <div className="inline-block bg-gray-100 px-6 py-3 rounded-lg border border-gray-200">
+                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    {t('donation.upiLabel') || 'Official UPI ID'}
+                  </p>
+                  <p className="font-bold text-[#111111] text-lg">
+                    organization@bank
+                  </p>
+                </div>
+              </div>
+              
+              {/* Right Side: QR Code */}
+              <div className="w-full md:w-2/5 flex justify-center md:justify-end">
+                <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center transform hover:scale-105 transition-all">
+                  {/* Replace this src with your actual QR code image URL */}
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=organization@bank&pn=Organization"
+                    alt="Donation QR Code"
+                    className="w-48 h-48 md:w-56 md:h-56 object-contain"
+                  />
+                  <p className="text-center text-[#111111] font-bold mt-4" style={getFontStyle()}>
+                    {t('donation.scanToDonate') || 'Scan to Donate'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-[#F4C430]">
         <div className="container mx-auto px-4 text-center">
