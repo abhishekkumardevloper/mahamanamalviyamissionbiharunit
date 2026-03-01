@@ -1,18 +1,11 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 const Team = () => {
-  const { t, i18n } = useTranslation();
-  const currentLanguage = i18n.language;
-  const fontFamilyStyle = { 
-    fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' 
-  };
-
-  // 1. TEAM DATA STRUCTURE (Row-wise divided for 5, 4, 4, 4 layout)
-  const teamRows = [
+  // Aapka static data yahan hai. Aap yahan se names, images aur designations edit kar sakte hain.
+  const teamGroups = [
     {
-      rowId: 'row1',
-      // Row 1: 5 Columns on large screens
+      id: 'group1',
+      headline: "Core Leadership", // Yahan Row 1 ka main heading daalein (Optional: agar top pe nahi chahiye toh khali chhod dein)
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1', 
       members: [
         { id: 1, image: "/images/team1.jpg", designation: "President", name: "Name 1" },
@@ -23,31 +16,31 @@ const Team = () => {
       ]
     },
     {
-      rowId: 'row2',
-      // Row 2: 4 Columns on large screens
-      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-5xl mx-auto', 
+      id: 'group2',
+      headline: "Management Team", // 5 images ke baad aane wali Headline
+      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
       members: [
-        { id: 6, image: "/images/team6.jpg", designation: "Manager", name: "Name 6" },
-        { id: 7, image: "/images/team7.jpg", designation: "Manager", name: "Name 7" },
-        { id: 8, image: "/images/team8.jpg", designation: "Manager", name: "Name 8" },
-        { id: 9, image: "/images/team9.jpg", designation: "Manager", name: "Name 9" }
+        { id: 6, image: "/images/team6.jpg", designation: "General Manager", name: "Name 6" },
+        { id: 7, image: "/images/team7.jpg", designation: "Operations Head", name: "Name 7" },
+        { id: 8, image: "/images/team8.jpg", designation: "Marketing Head", name: "Name 8" },
+        { id: 9, image: "/images/team9.jpg", designation: "Finance Head", name: "Name 9" }
       ]
     },
     {
-      rowId: 'row3',
-      // Row 3: 4 Columns on large screens
-      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-5xl mx-auto', 
+      id: 'group3',
+      headline: "Executive Members", // Agle 4 images ke baad aane wali Headline
+      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
       members: [
-        { id: 10, image: "/images/team10.jpg", designation: "Lead", name: "Name 10" },
-        { id: 11, image: "/images/team11.jpg", designation: "Lead", name: "Name 11" },
-        { id: 12, image: "/images/team12.jpg", designation: "Lead", name: "Name 12" },
-        { id: 13, image: "/images/team13.jpg", designation: "Lead", name: "Name 13" }
+        { id: 10, image: "/images/team10.jpg", designation: "Executive", name: "Name 10" },
+        { id: 11, image: "/images/team11.jpg", designation: "Executive", name: "Name 11" },
+        { id: 12, image: "/images/team12.jpg", designation: "Executive", name: "Name 12" },
+        { id: 13, image: "/images/team13.jpg", designation: "Executive", name: "Name 13" }
       ]
     },
     {
-      rowId: 'row4',
-      // Row 4: 4 Columns on large screens
-      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-5xl mx-auto', 
+      id: 'group4',
+      headline: "Working Committee", // Aakhiri 4 images ke pehle ki Headline
+      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
       members: [
         { id: 14, image: "/images/team14.jpg", designation: "Member", name: "Name 14" },
         { id: 15, image: "/images/team15.jpg", designation: "Member", name: "Name 15" },
@@ -62,54 +55,58 @@ const Team = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 max-w-7xl">
           
-          {/* Section Heading */}
-          <h1 
-            className="text-4xl md:text-5xl font-bold text-[#111111] mb-4 text-center" 
-            style={fontFamilyStyle}
-          >
-            {t('team.heading', 'Our Dedicated Team')}
+          {/* Main Page Heading */}
+          <h1 className="text-4xl md:text-5xl font-bold text-[#111111] mb-4 text-center font-sans">
+            Our Dedicated Team
           </h1>
           <div className="w-24 h-1 bg-[#F4C430] mx-auto mb-16"></div>
 
-          {/* 2. RENDERING THE ROWS AND MEMBERS */}
-          <div className="flex flex-col gap-12">
-            {teamRows.map((row) => (
-              <div key={row.rowId} className={`grid gap-8 ${row.gridClass}`}>
+          {/* Rendering the Groups with their Headlines */}
+          <div className="flex flex-col gap-16">
+            {teamGroups.map((group, index) => (
+              <div key={group.id} className="flex flex-col items-center">
                 
-                {row.members.map((member) => (
-                  <div 
-                    key={member.id} 
-                    className="bg-white rounded-xl p-6 border border-gray-100 hover:border-[#F4C430] hover:shadow-xl transition-all flex flex-col items-center text-center"
-                  >
-                    {/* Image (Top) */}
-                    <div className="w-32 h-32 mb-5 rounded-full overflow-hidden border-4 border-gray-50 shadow-sm">
-                      <img 
-                        src={member.image} 
-                        alt={member.name} 
-                        className="w-full h-full object-cover"
-                        // Fallback image in case the real image is missing
-                        onError={(e) => { e.target.src = 'https://via.placeholder.com/150?text=No+Image' }} 
-                      />
-                    </div>
-
-                    {/* Designation (Middle) */}
-                    <p 
-                      className="text-[#F4C430] font-semibold text-sm uppercase tracking-wider mb-2"
-                      style={fontFamilyStyle}
-                    >
-                      {member.designation}
-                    </p>
-
-                    {/* Name (Bottom) */}
-                    <h3 
-                      className="text-xl font-bold text-[#111111]" 
-                      style={fontFamilyStyle}
-                    >
-                      {member.name}
-                    </h3>
+                {/* Intermediate Headline (Jo alag-alag post ke liye hai) */}
+                {group.headline && (
+                  <div className="mb-10 text-center w-full">
+                    <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                      {group.headline}
+                    </h2>
+                    {/* Chhoti si underline style ke liye */}
+                    <div className="w-16 h-1 bg-gray-300 mx-auto"></div>
                   </div>
-                ))}
-                
+                )}
+
+                {/* Team Grid */}
+                <div className={`grid gap-8 w-full ${group.gridClass}`}>
+                  {group.members.map((member) => (
+                    <div 
+                      key={member.id} 
+                      className="bg-white rounded-lg p-5 border border-gray-100 hover:border-[#F4C430] hover:shadow-xl transition-all flex flex-col items-center text-center"
+                    >
+                      {/* Image - Square & Medium Size */}
+                      <div className="w-48 h-48 mb-5 rounded-md overflow-hidden bg-gray-100 border border-gray-200 shadow-sm">
+                        <img 
+                          src={member.image} 
+                          alt={member.name} 
+                          className="w-full h-full object-cover"
+                          onError={(e) => { e.target.src = 'https://via.placeholder.com/200?text=No+Image' }} 
+                        />
+                      </div>
+
+                      {/* Designation */}
+                      <p className="text-[#F4C430] font-semibold text-sm uppercase tracking-wider mb-2">
+                        {member.designation}
+                      </p>
+
+                      {/* Name */}
+                      <h3 className="text-xl font-bold text-[#111111]">
+                        {member.name}
+                      </h3>
+                    </div>
+                  ))}
+                </div>
+
               </div>
             ))}
           </div>
