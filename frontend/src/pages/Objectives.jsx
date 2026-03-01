@@ -18,7 +18,6 @@ const Team = () => {
     {
       id: 'group2',
       headline: "Proposers (Management Team)", 
-      // Changed lg:grid-cols-4 to lg:grid-cols-3 since there are 3 proposers
       gridClass: 'lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 grid-cols-1 max-w-6xl mx-auto', 
       members: [
         { id: 6, image: "/images/team6.jpg", designation: "Proposer (President)", name: "Shivaji Chaturvedi" },
@@ -27,21 +26,8 @@ const Team = () => {
       ]
     },
     {
-      id: 'group3',
-      headline: "Executive Members", 
-      // As requested, Group 3 is left untouched
-      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
-      members: [
-        { id: 10, image: "/images/team10.jpg", designation: "Executive", name: "Name 10" },
-        { id: 11, image: "/images/team11.jpg", designation: "Executive", name: "Name 11" },
-        { id: 12, image: "/images/team12.jpg", designation: "Executive", name: "Name 12" },
-        { id: 13, image: "/images/team13.jpg", designation: "Executive", name: "Name 13" }
-      ]
-    },
-    {
       id: 'group4',
       headline: "Working Committee (Secretary Board)", 
-      // Changed lg:grid-cols-4 to lg:grid-cols-5 to neatly fit 10 members in 2 rows
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
         { id: 14, image: "/images/team14.jpg", designation: "Secretary", name: "Suman Kumar Singh" },
@@ -55,9 +41,40 @@ const Team = () => {
         { id: 22, image: "/images/team22.jpg", designation: "Secretary", name: "Naveen Lakshman" },
         { id: 23, image: "/images/team23.jpg", designation: "Secretary", name: "Amar Prakash Singh" }
       ]
+    },
+    {
+      id: 'group5',
+      headline: "Patrons (संरक्षक)", 
+      gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
+      members: [
+        { id: 24, image: "/images/team24.jpg", designation: "Former IAS, Bihar", name: "Shri R. U. Singh" },
+        { id: 25, image: "/images/team25.jpg", designation: "Former Information Commissioner, Bihar", name: "Shri O. P. Srivastava" },
+        { id: 26, image: "/images/team26.jpg", designation: "MLC, Bihar Legislative Council", name: "Shri Omprakash Yadav" },
+        { id: 27, image: "/images/team27.jpg", designation: "Former President, Mahamana Malaviya Mission Bihar", name: "Shri Uday Singh" },
+        { id: 28, image: "/images/team28.jpg", designation: "Director, IIT Patna", name: "Prof. T. N. Singh" }
+      ]
+    },
+    {
+      id: 'group6',
+      headline: "Advisory Committee (सलाहकार समिति)", 
+      // 12 members fit perfectly into a 4-column grid (3 rows)
+      gridClass: 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
+      members: [
+        { id: 29, image: "/images/team29.jpg", designation: "Advisor", name: "Shri Mithilesh Mishra" },
+        { id: 30, image: "/images/team30.jpg", designation: "Advisor", name: "Shri Baidyanath Yadav" },
+        { id: 31, image: "/images/team31.jpg", designation: "Advisor", name: "Shri Sanjay Kumar Singh" },
+        { id: 32, image: "/images/team32.jpg", designation: "Advisor", name: "Shri Rakesh Malhotra" },
+        { id: 33, image: "/images/team33.jpg", designation: "Advisor", name: "Shri Rajeshwar Dubey" },
+        { id: 34, image: "/images/team34.jpg", designation: "Advisor", name: "Shri Ashwani Kumar Singh" },
+        { id: 35, image: "/images/team35.jpg", designation: "Advisor", name: "Shri Mrityunjay Pandey" },
+        { id: 36, image: "/images/team36.jpg", designation: "Advisor", name: "Dr. Arvind Gupta" },
+        { id: 37, image: "/images/team37.jpg", designation: "Advisor", name: "Shri Ravindra Upadhyay" },
+        { id: 38, image: "/images/team38.jpg", designation: "Advisor", name: "Shri Rajnikant" },
+        { id: 39, image: "/images/team39.jpg", designation: "AIIMS Patna", name: "Dr. Anand Rai" },
+        { id: 40, image: "/images/team40.jpg", designation: "Advisor", name: "Dr. Vimlendu Singh" }
+      ]
     }
 ];
-
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="py-20">
