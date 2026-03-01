@@ -139,7 +139,7 @@ const Home = () => {
       {/* Stats Section (Kept static/ternary as it's not in the main JSON structure) */}
       <section className="py-20 bg-[#111111]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {[
               { number: '45+', label: currentLanguage === 'hi' ? 'वर्षों की सेवा' : 'Years of Service' },
               { number: '1000+', label: currentLanguage === 'hi' ? 'सदस्य' : 'Members' },
