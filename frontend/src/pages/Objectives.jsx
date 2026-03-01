@@ -5,30 +5,31 @@ const Team = () => {
   const teamGroups = [
     {
       id: 'group1',
-      headline: "Core Leadership", // Yahan Row 1 ka main heading daalein (Optional: agar top pe nahi chahiye toh khali chhod dein)
+      headline: "Core Leadership", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1', 
       members: [
-        { id: 1, image: "/images/team1.jpg", designation: "President", name: "Name 1" },
-        { id: 2, image: "/images/team2.jpg", designation: "Vice President", name: "Name 2" },
-        { id: 3, image: "/images/team3.jpg", designation: "Secretary", name: "Name 3" },
-        { id: 4, image: "/images/team4.jpg", designation: "Treasurer", name: "Name 4" },
-        { id: 5, image: "/images/team5.jpg", designation: "Advisor", name: "Name 5" }
+        { id: 1, image: "/images/team1.jpg", designation: "President", name: "Bipin Kumar Singh" },
+        { id: 2, image: "/images/team4.jpg", designation: "Vice President", name: "Satya Srivastava" },
+        { id: 3, image: "/images/team5.jpg", designation: "Vice President", name: "Dr. Sonali Gupta" }
+        { id: 4, image: "/images/team2.jpg", designation: "General Secretary", name: "Alok Singh" },
+        { id: 5, image: "/images/team3.jpg", designation: "Treasurer", name: "Manit Kumar" }
       ]
     },
     {
       id: 'group2',
-      headline: "Management Team", // 5 images ke baad aane wali Headline
-      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
+      headline: "Proposers (Management Team)", 
+      // Changed lg:grid-cols-4 to lg:grid-cols-3 since there are 3 proposers
+      gridClass: 'lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 grid-cols-1 max-w-6xl mx-auto', 
       members: [
-        { id: 6, image: "/images/team6.jpg", designation: "General Manager", name: "Name 6" },
-        { id: 7, image: "/images/team7.jpg", designation: "Operations Head", name: "Name 7" },
-        { id: 8, image: "/images/team8.jpg", designation: "Marketing Head", name: "Name 8" },
-        { id: 9, image: "/images/team9.jpg", designation: "Finance Head", name: "Name 9" }
+        { id: 6, image: "/images/team6.jpg", designation: "Proposer (President)", name: "Shivaji Chaturvedi" },
+        { id: 7, image: "/images/team7.jpg", designation: "Proposer (Gen. Sec.)", name: "Rajneesh Upadhyay" },
+        { id: 8, image: "/images/team8.jpg", designation: "Proposer (Treasurer)", name: "Satya Srivastava" }
       ]
     },
     {
       id: 'group3',
-      headline: "Executive Members", // Agle 4 images ke baad aane wali Headline
+      headline: "Executive Members", 
+      // As requested, Group 3 is left untouched
       gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
       members: [
         { id: 10, image: "/images/team10.jpg", designation: "Executive", name: "Name 10" },
@@ -39,16 +40,23 @@ const Team = () => {
     },
     {
       id: 'group4',
-      headline: "Working Committee", // Aakhiri 4 images ke pehle ki Headline
-      gridClass: 'lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
+      headline: "Working Committee (Secretary Board)", 
+      // Changed lg:grid-cols-4 to lg:grid-cols-5 to neatly fit 10 members in 2 rows
+      gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
-        { id: 14, image: "/images/team14.jpg", designation: "Member", name: "Name 14" },
-        { id: 15, image: "/images/team15.jpg", designation: "Member", name: "Name 15" },
-        { id: 16, image: "/images/team16.jpg", designation: "Member", name: "Name 16" },
-        { id: 17, image: "/images/team17.jpg", designation: "Member", name: "Name 17" }
+        { id: 14, image: "/images/team14.jpg", designation: "Secretary", name: "Suman Kumar Singh" },
+        { id: 15, image: "/images/team15.jpg", designation: "Secretary", name: "Rajneesh Upadhyay" },
+        { id: 16, image: "/images/team16.jpg", designation: "Secretary", name: "Amarendra Pandey" },
+        { id: 17, image: "/images/team17.jpg", designation: "Secretary", name: "Rajeev Kumar" },
+        { id: 18, image: "/images/team18.jpg", designation: "Secretary", name: "Shailendra Tomar" },
+        { id: 19, image: "/images/team19.jpg", designation: "Secretary", name: "Dr. Pankhuri Mishra" },
+        { id: 20, image: "/images/team20.jpg", designation: "Secretary", name: "Sumit Kumar" },
+        { id: 21, image: "/images/team21.jpg", designation: "Secretary", name: "Ankit Kumar" },
+        { id: 22, image: "/images/team22.jpg", designation: "Secretary", name: "Naveen Lakshman" },
+        { id: 23, image: "/images/team23.jpg", designation: "Secretary", name: "Amar Prakash Singh" }
       ]
     }
-  ];
+];
 
   return (
     <div className="min-h-screen bg-gray-50">
