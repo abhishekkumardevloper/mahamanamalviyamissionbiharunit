@@ -16,16 +16,6 @@ const Team = () => {
       ]
     },
     {
-      id: 'group2',
-      headline: "Proposers (Management Team)", 
-      gridClass: 'lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 grid-cols-1 max-w-6xl mx-auto', 
-      members: [
-        { id: 6, image: "/images/team6.jpg", designation: "Proposer (President)", name: "Shivaji Chaturvedi" },
-        { id: 7, image: "/images/team7.jpg", designation: "Proposer (Gen. Sec.)", name: "Rajneesh Upadhyay" },
-        { id: 8, image: "/images/team8.jpg", designation: "Proposer (Treasurer)", name: "Satya Srivastava" }
-      ]
-    },
-    {
       id: 'group4',
       headline: "Working Committee (Secretary Board)", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
