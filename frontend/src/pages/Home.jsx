@@ -205,7 +205,7 @@ const Home = () => {
               {/* Left Side: Donation Text */}
               <div className="w-full md:w-3/5">
                 <h2 className="text-3xl md:text-4xl font-bold text-[#111111] mb-4" style={getFontStyle()}>
-                  {t('donation.title') || 'Support Our Cause'}
+                  Donatation for Mahamana Malviya Mission Bihar
                 </h2>
                 <p className="text-gray-700 text-lg mb-6 leading-relaxed" style={getFontStyle()}>
                   {t('donation.description') || 'Your generous contributions help us sustain our programs and reach more people in need. Scan the QR code to make a secure donation directly to our initiative.'}
