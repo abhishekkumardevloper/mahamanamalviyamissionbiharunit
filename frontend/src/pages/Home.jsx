@@ -143,8 +143,7 @@ const Home = () => {
             {[
               { number: '45+', label: currentLanguage === 'hi' ? 'वर्षों की सेवा' : 'Years of Service' },
               { number: '1000+', label: currentLanguage === 'hi' ? 'सदस्य' : 'Members' },
-              { number: '500+', label: currentLanguage === 'hi' ? 'कार्यक्रम' : 'Programs' },
-              { number: '50+', label: currentLanguage === 'hi' ? 'पुरस्कार' : 'Awards' }
+              { number: '500+', label: currentLanguage === 'hi' ? 'कार्यक्रम' : 'Programs' }
             ].map((stat, index) => (
               <div key={index} className="text-center transform hover:scale-110 transition-all">
                 <div className="text-4xl md:text-5xl font-bold text-[#F4C430] mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
