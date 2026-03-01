@@ -10,7 +10,7 @@ const Team = () => {
       members: [
         { id: 1, image: "/images/team1.jpg", designation: "President", name: "Bipin Kumar Singh" },
         { id: 2, image: "/images/team4.jpg", designation: "Vice President", name: "Satya Srivastava" },
-        { id: 3, image: "/images/team5.jpg", designation: "Vice President", name: "Dr. Sonali Gupta" }
+        { id: 3, image: "/images/team5.jpg", designation: "Vice President", name: "Dr. Sonali Gupta" },
         { id: 4, image: "/images/team2.jpg", designation: "General Secretary", name: "Alok Singh" },
         { id: 5, image: "/images/team3.jpg", designation: "Treasurer", name: "Manit Kumar" }
       ]
