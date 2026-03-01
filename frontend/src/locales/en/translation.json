@@ -11,14 +11,42 @@
   },
   "header": {
     "title": "Mahamana Malaviya Mission",
-    "tagline": ""
+    "tagline": "Empowering Bihar through Education, Values, and Service"
   },
   "hero": {
     "welcome": "Welcome to Mahamana Malaviya Mission (Bihar Unit)",
-    "mission": "Our Mission: Education, Values, and Nation Building",
-    "joinBtn": "Join Us",
-    "newsLabel": "Latest News",
-    "newsText": "Recently, the 15th National Convention was successfully organized at IIT Patna."
+    "mission": "Carrying forward the visionary ideals of Bharat Ratna Pt. Madan Mohan Malaviya. We are dedicated to building a stronger nation through holistic education, cultural preservation, and social upliftment.",
+    "joinBtn": "Join the Movement",
+    "learnMoreBtn": "Learn More",
+    "newsLabel": "📢 Latest Highlight",
+    "newsText": "Recently, the 15th National Convention was successfully organized at IIT Patna, bringing together scholars, leaders, and youth."
+  },
+  "homeAbout": {
+    "title": "Our Vision & Legacy",
+    "description": "Inspired by the life and teachings of Mahamana, the Bihar Chapter works tirelessly at the grassroots level. We believe that true development begins with moral values and accessible education for all. Join us in shaping the leaders of tomorrow."
+  },
+  "initiatives": {
+    "title": "Our Core Initiatives",
+    "cards": [
+      {
+        "heading": "Educational Excellence",
+        "text": "Organizing seminars, workshops, and providing guidance to meritorious students across Bihar."
+      },
+      {
+        "heading": "Value-Based Leadership",
+        "text": "Instilling the principles of ethics, nationalism, and social responsibility in the youth."
+      },
+      {
+        "heading": "Community Welfare",
+        "text": "Conducting health camps, awareness drives, and social service initiatives for the underprivileged."
+      }
+    ]
+  },
+  "cta": {
+    "heading": "Be a Part of the Change",
+    "subtext": "Your time, skills, and support can help us reach more communities across Bihar.",
+    "volunteerBtn": "Become a Volunteer",
+    "contactBtn": "Contact Us"
   },
   "about": {
     "heading": "Introduction of the Organization",
