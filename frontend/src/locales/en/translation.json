@@ -230,3 +230,11 @@
     "tagline": "Education, Values, Nation Building"
   }
 }
+{
+  "donation": {
+    "title": "Support Our Cause",
+    "description": "Your generous contributions help us sustain our programs and reach more people in need. Scan the QR code to make a secure donation directly to our initiative.",
+    "upiLabel": "Official UPI ID",
+    "scanToDonate": "Scan to Donate"
+  }
+}
