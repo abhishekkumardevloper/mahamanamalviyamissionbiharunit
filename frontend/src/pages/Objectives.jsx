@@ -8,8 +8,8 @@ const Team = () => {
       headline: "Core Leadership", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1', 
       members: [
-        { id: 1, image: "/images/team1.jpg", designation: "President", name: "Bipin Kumar Singh" },
-        { id: 4, image: "/images/team2.jpg", designation: "General Secretary", name: "Alok Singh" },
+        { id: 1, image: "/bipin.jpeg", designation: "President", name: "Bipin Kumar Singh" },
+        { id: 4, image: "/alok.jpeg", designation: "General Secretary", name: "Alok Singh" },
         { id: 5, image: "/images/team3.jpg", designation: "Treasurer", name: "Manit Kumar" },
         { id: 2, image: "/images/team4.jpg", designation: "Vice President", name: "Satya Srivastava" },
         { id: 3, image: "/images/team5.jpg", designation: "Vice President", name: "Dr. Sonali Gupta" }
