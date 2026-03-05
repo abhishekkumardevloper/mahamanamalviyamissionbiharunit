@@ -12,7 +12,7 @@ const Team = () => {
         { id: 4, image: "/alok.jpeg", designation: "General Secretary", name: "Alok Singh" },
         { id: 5, image: "/images/team3.jpg", designation: "Treasurer", name: "Manit Kumar" },
         { id: 2, image: "/images/team4.jpg", designation: "Vice President", name: "Satya Srivastava" },
-        { id: 3, image: "/images/team5.jpg", designation: "Vice President", name: "Dr. Sonali Gupta" }
+        { id: 3, image: "/sonali.jpeg", designation: "Vice President", name: "Dr. Sonali Gupta" }
       ]
     },
     {
