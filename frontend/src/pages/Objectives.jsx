@@ -32,7 +32,7 @@ const Team = () => {
       headline: "Working Committee (Secretary Board)", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
-        { id: 14, image: "/images/team14.jpg", designation: "Secretary", name: "Suman Kumar Singh" },
+        { id: 14, image: "/suman.jpeg", designation: "Secretary", name: "Suman Kumar Singh" },
         { id: 15, image: "/images/team15.jpg", designation: "Secretary", name: "Rajneesh Upadhyay" },
         { id: 16, image: "/images/team16.jpg", designation: "Secretary", name: "Amarendra Pandey" },
         { id: 17, image: "/images/team17.jpg", designation: "Secretary", name: "Rajeev Kumar" },
