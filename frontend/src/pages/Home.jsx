@@ -48,9 +48,9 @@ const Home = () => {
 
       {/* News Ticker */}
       <section className="bg-[#F4C430] py-3 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-[#111111] px-4 py-2 rounded-full">
+        <div className="container mx-auto px-2">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-[#111111] px-2 py-1 rounded-full">
               <Newspaper className="text-[#F4C430] w-5 h-5" />
               <span className="text-white font-bold text-sm whitespace-nowrap" style={getFontStyle()}>
                 {t('hero.newsLabel')}
