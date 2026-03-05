@@ -8,7 +8,7 @@ const Team = () => {
       headline: "Board of Patrons", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
-        { id: 24, image: "/images/team24.jpg", designation: "Patrons", name: "Shri R. U. Singh" },
+        { id: 24, image: "/ru.jpeg", designation: "Patrons", name: "Shri R. U. Singh" },
         { id: 25, image: "/images/team25.jpg", designation: "Patrons, Bihar", name: "Shri O. P. Srivastava" },
         { id: 26, image: "/images/team26.jpg", designation: "Patrons", name: "Shri Omprakash Yadav" },
         { id: 27, image: "/images/team27.jpg", designation: "Patrons", name: "Shri Uday Singh" },
