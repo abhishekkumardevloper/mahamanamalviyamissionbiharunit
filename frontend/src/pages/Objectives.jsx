@@ -4,6 +4,18 @@ const Team = () => {
   // Aapka static data yahan hai. Aap yahan se names, images aur designations edit kar sakte hain.
   const teamGroups = [
     {
+      id: 'group5',
+      headline: "Board of Patrons", 
+      gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
+      members: [
+        { id: 24, image: "/images/team24.jpg", designation: "Patrons", name: "Shri R. U. Singh" },
+        { id: 25, image: "/images/team25.jpg", designation: "Patrons, Bihar", name: "Shri O. P. Srivastava" },
+        { id: 26, image: "/images/team26.jpg", designation: "Patrons", name: "Shri Omprakash Yadav" },
+        { id: 27, image: "/images/team27.jpg", designation: "Patrons", name: "Shri Uday Singh" },
+        { id: 28, image: "/images/team28.jpg", designation: "Patrons", name: "Prof. T. N. Singh" }
+      ]
+    },
+    {
       id: 'group1',
       headline: "Core Leadership", 
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1', 
@@ -30,18 +42,6 @@ const Team = () => {
         { id: 21, image: "/images/team21.jpg", designation: "Secretary", name: "Ankit Kumar" },
         { id: 22, image: "/images/team22.jpg", designation: "Secretary", name: "Naveen Lakshman" },
         { id: 23, image: "/images/team23.jpg", designation: "Secretary", name: "Amar Prakash Singh" }
-      ]
-    },
-    {
-      id: 'group5',
-      headline: "Board of Patrons", 
-      gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
-      members: [
-        { id: 24, image: "/images/team24.jpg", designation: "Patrons", name: "Shri R. U. Singh" },
-        { id: 25, image: "/images/team25.jpg", designation: "Patrons, Bihar", name: "Shri O. P. Srivastava" },
-        { id: 26, image: "/images/team26.jpg", designation: "Patrons", name: "Shri Omprakash Yadav" },
-        { id: 27, image: "/images/team27.jpg", designation: "Patrons", name: "Shri Uday Singh" },
-        { id: 28, image: "/images/team28.jpg", designation: "Patrons", name: "Prof. T. N. Singh" }
       ]
     },
     {
