@@ -38,7 +38,7 @@ const Team = () => {
         { id: 17, image: "/images/team17.jpg", designation: "Secretary", name: "Rajeev Kumar" },
         { id: 18, image: "/images/team18.jpg", designation: "Secretary", name: "Shailendra Tomar" },
         { id: 19, image: "/images/team19.jpg", designation: "Secretary", name: "Dr. Pankhuri Mishra" },
-        { id: 20, image: "/images/team20.jpg", designation: "Secretary", name: "Sumit Kumar" },
+        { id: 20, image: "/sumit.jpeg", designation: "Secretary", name: "Sumit Singh" },
         { id: 21, image: "/images/team21.jpg", designation: "Secretary", name: "Ankit Kumar" },
         { id: 22, image: "/images/team22.jpg", designation: "Secretary", name: "Naveen Lakshman" },
         { id: 23, image: "/images/team23.jpg", designation: "Secretary", name: "Amar Prakash Singh" }
