@@ -15,7 +15,7 @@
   },
   "hero": {
     "welcome": "Welcome to Mahamana Malaviya Mission (Bihar Unit)",
-    "mission": "Our goal: education, culture and nation building",
+    "mission": "Our goal <br> Education, Culture and Nation building",
     "joinBtn": "Join the Movement",
     "learnMoreBtn": "Learn More",
     "newsLabel": "📢 Latest Highlight",
