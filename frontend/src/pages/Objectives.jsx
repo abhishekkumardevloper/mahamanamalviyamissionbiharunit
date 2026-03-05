@@ -22,8 +22,8 @@ const Team = () => {
       members: [
         { id: 1, image: "/bipin.jpeg", designation: "President", name: "Bipin Kumar Singh" },
         { id: 4, image: "/alok.jpeg", designation: "General Secretary", name: "Alok Singh" },
-        { id: 5, image: "/images/team3.jpg", designation: "Treasurer", name: "Manit Kumar" },
-        { id: 2, image: "/images/team4.jpg", designation: "Vice President", name: "Satya Srivastava" },
+        { id: 5, image: "/manit.jpeg", designation: "Treasurer", name: "Manit Kumar" },
+        { id: 2, image: "/satya.jpeg", designation: "Vice President", name: "Satya Srivastava" },
         { id: 3, image: "/sonali.jpeg", designation: "Vice President", name: "Dr. Sonali Gupta" }
       ]
     },
@@ -56,7 +56,7 @@ const Team = () => {
         { id: 32, image: "/images/team32.jpg", designation: "Advisor", name: "Shri Rakesh Malhotra" },
         { id: 33, image: "/images/team33.jpg", designation: "Advisor", name: "Shri Rajeshwar Dubey" },
         { id: 34, image: "/images/team34.jpg", designation: "Advisor", name: "Shri Ashwani Kumar Singh" },
-        { id: 35, image: "/images/team35.jpg", designation: "Advisor", name: "Shri Mrityunjay Pandey" },
+        { id: 35, image: "/pandayji.jpeg", designation: "Advisor", name: "Shri Mrityunjay Pandey" },
         { id: 36, image: "/images/team36.jpg", designation: "Advisor", name: "Dr. Arvind Gupta" },
         { id: 37, image: "/images/team37.jpg", designation: "Advisor", name: "Shri Ravindra Upadhyay" },
         { id: 38, image: "/images/team38.jpg", designation: "Advisor", name: "Shri Rajnikant" },
