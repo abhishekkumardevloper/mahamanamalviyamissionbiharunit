@@ -141,9 +141,10 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {[
-              { number: '45+', label: currentLanguage === 'hi' ? 'वर्षों की सेवा' : 'Years of Service' },
-              { number: '1000+', label: currentLanguage === 'hi' ? 'सदस्य' : 'Members' },
-              { number: '500+', label: currentLanguage === 'hi' ? 'कार्यक्रम' : 'Programs' }
+             { number: '5+', label: currentLanguage === 'hi' ? 'वर्षों की सेवा' : 'Years of Service' },
+{ number: '1000+', label: currentLanguage === 'hi' ? 'सदस्य' : 'Members' },
+{ number: '500+', label: currentLanguage === 'hi' ? 'कार्यक्रम' : 'Programs' },
+{ number: '100+', label: currentLanguage === 'hi' ? 'सफल परियोजनाएँ' : 'Successful Projects' }
             ].map((stat, index) => (
               <div key={index} className="text-center transform hover:scale-110 transition-all">
                 <div className="text-4xl md:text-5xl font-bold text-[#F4C430] mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
