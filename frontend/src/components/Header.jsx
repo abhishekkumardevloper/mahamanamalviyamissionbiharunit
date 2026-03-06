@@ -54,24 +54,27 @@ const Header = () => {
           : 'bg-[#111111] py-4 md:py-5'
       }`}
     >
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between gap-4">
+      <div className="container mx-auto px-4 lg:px-6 xl:px-8">
+        {/* Adjusted gap for better fitting on standard laptops */}
+        <div className="flex items-center justify-between gap-2 xl:gap-4">
           
           {/* --- LEFT: Logo & Brand --- */}
-          <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50" onClick={() => setMobileMenuOpen(false)}>
+          <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50 shrink-0" onClick={() => setMobileMenuOpen(false)}>
             <div className={`shrink-0 bg-gradient-to-br from-[#F4C430] to-[#ffd700] rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-[#111111] group-hover:scale-105 transition-transform duration-300 ${scrolled ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-16 md:h-16'}`}>
               <img src="malviyamissionbiharlogo.png" alt="Logo" className="w-[85%] h-[85%] object-contain" />
             </div>
             
             <div className="hidden sm:block">
+              {/* Added whitespace-nowrap here to stop title from breaking */}
               <h1 
-                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] ${scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`} 
+                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] whitespace-nowrap ${scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`} 
                 style={getFont()}
               >
                 {t('header.title')}
               </h1>
+              {/* Added whitespace-nowrap here to stop tagline from breaking */}
               <p 
-                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
+                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 whitespace-nowrap ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
                 style={getFont()}
               >
                 {t('header.tagline')}
@@ -80,6 +83,7 @@ const Header = () => {
           </Link>
 
           {/* --- CENTER: Desktop Navigation --- */}
+          {/* Switched lg:flex to xl:flex so it uses the hamburger menu on smaller laptops/tablets if space is too tight, or adjusted paddings to keep it on lg */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
@@ -87,7 +91,8 @@ const Header = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`relative px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
+                  // Added whitespace-nowrap and slightly reduced padding (px-3 on lg, px-4 on xl)
+                  className={`relative whitespace-nowrap px-3 xl:px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
                     isActive
                       ? 'text-[#111111] bg-[#F4C430] shadow-[0_0_15px_rgba(244,196,48,0.3)]'
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -101,13 +106,13 @@ const Header = () => {
           </nav>
 
           {/* --- RIGHT: Actions (Language, Join CTA, Mobile Toggle) --- */}
-          <div className="flex items-center gap-3 lg:gap-5 z-50">
+          <div className="flex items-center gap-3 lg:gap-4 xl:gap-5 z-50 shrink-0">
             
             {/* Language Switcher */}
             <div className="flex items-center p-1 bg-black/40 border border-white/10 rounded-full shadow-inner">
               <button
                 onClick={() => changeLanguage('hi')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap ${
                   currentLanguage === 'hi' ? 'bg-[#F4C430] text-[#111111] shadow-md' : 'text-gray-400 hover:text-white'
                 }`}
                 style={{ fontFamily: 'Noto Sans Devanagari, sans-serif' }}
@@ -116,7 +121,7 @@ const Header = () => {
               </button>
               <button
                 onClick={() => changeLanguage('en')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap ${
                   currentLanguage === 'en' ? 'bg-[#F4C430] text-[#111111] shadow-md' : 'text-gray-400 hover:text-white'
                 }`}
                 style={{ fontFamily: 'Poppins, sans-serif' }}
@@ -128,7 +133,7 @@ const Header = () => {
             {/* Prominent "Join Us" Button (Desktop Only) */}
             <Link
               to="/join"
-              className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-[#F4C430] to-[#ffd700] text-[#111111] px-6 py-2.5 rounded-full font-extrabold text-sm hover:shadow-[0_0_20px_rgba(244,196,48,0.4)] transform hover:-translate-y-0.5 transition-all duration-300"
+              className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-[#F4C430] to-[#ffd700] text-[#111111] px-5 xl:px-6 py-2.5 rounded-full font-extrabold text-sm hover:shadow-[0_0_20px_rgba(244,196,48,0.4)] transform hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
               style={getFont()}
             >
               {t('nav.join')}
@@ -137,7 +142,7 @@ const Header = () => {
 
             {/* Mobile Hamburger Toggle */}
             <button
-              className="lg:hidden text-[#F4C430] p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="lg:hidden text-[#F4C430] p-2 hover:bg-white/10 rounded-full transition-colors shrink-0"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
