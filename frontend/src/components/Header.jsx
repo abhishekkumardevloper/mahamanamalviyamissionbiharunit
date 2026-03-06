@@ -18,13 +18,18 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Safely lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = ''; // Using empty string safely removes the inline style
     }
+    
+    // Cleanup in case the component unmounts while menu is open
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [mobileMenuOpen]);
 
   const changeLanguage = (lang) => {
@@ -55,26 +60,27 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto px-4 lg:px-6 xl:px-8">
-        {/* Adjusted gap for better fitting on standard laptops */}
         <div className="flex items-center justify-between gap-2 xl:gap-4">
           
           {/* --- LEFT: Logo & Brand --- */}
-          <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50 shrink-0" onClick={() => setMobileMenuOpen(false)}>
+          {/* Removed shrink-0 and added min-w-0 to allow proper truncation on small screens */}
+          <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50 min-w-0" onClick={() => setMobileMenuOpen(false)}>
             <div className={`shrink-0 bg-gradient-to-br from-[#F4C430] to-[#ffd700] rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-[#111111] group-hover:scale-105 transition-transform duration-300 ${scrolled ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-16 md:h-16'}`}>
               <img src="malviyamissionbiharlogo.png" alt="Logo" className="w-[85%] h-[85%] object-contain" />
             </div>
             
-            <div className="hidden sm:block">
-              {/* Added whitespace-nowrap here to stop title from breaking */}
+            {/* Added flex, flex-col, and min-w-0 to enable truncation */}
+            <div className="hidden sm:flex flex-col min-w-0">
+              {/* Replaced whitespace-nowrap with truncate */}
               <h1 
-                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] whitespace-nowrap ${scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`} 
+                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] truncate ${scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`} 
                 style={getFont()}
               >
                 {t('header.title')}
               </h1>
-              {/* Added whitespace-nowrap here to stop tagline from breaking */}
+              {/* Replaced whitespace-nowrap with truncate */}
               <p 
-                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 whitespace-nowrap ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
+                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 truncate ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
                 style={getFont()}
               >
                 {t('header.tagline')}
@@ -83,7 +89,6 @@ const Header = () => {
           </Link>
 
           {/* --- CENTER: Desktop Navigation --- */}
-          {/* Switched lg:flex to xl:flex so it uses the hamburger menu on smaller laptops/tablets if space is too tight, or adjusted paddings to keep it on lg */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
@@ -91,7 +96,6 @@ const Header = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  // Added whitespace-nowrap and slightly reduced padding (px-3 on lg, px-4 on xl)
                   className={`relative whitespace-nowrap px-3 xl:px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
                     isActive
                       ? 'text-[#111111] bg-[#F4C430] shadow-[0_0_15px_rgba(244,196,48,0.3)]'
@@ -106,6 +110,7 @@ const Header = () => {
           </nav>
 
           {/* --- RIGHT: Actions (Language, Join CTA, Mobile Toggle) --- */}
+          {/* shrink-0 kept here so actions don't get squished */}
           <div className="flex items-center gap-3 lg:gap-4 xl:gap-5 z-50 shrink-0">
             
             {/* Language Switcher */}
@@ -158,7 +163,8 @@ const Header = () => {
           mobileMenuOpen ? 'opacity-100 visible translate-x-0' : 'opacity-0 invisible translate-x-full'
         }`}
       >
-        <div className="flex flex-col h-full p-6 overflow-y-auto">
+        {/* Added pb-24 here so content at the very bottom isn't covered by mobile browser UI */}
+        <div className="flex flex-col h-full p-6 pb-24 overflow-y-auto">
           <nav className="flex flex-col gap-2">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
