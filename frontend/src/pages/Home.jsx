@@ -224,11 +224,8 @@ const Home = () => {
                     <QrCode className="w-6 h-6 text-[#F4C430]" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wider mb-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                      {t('donation.upiLabel') || 'Official UPI ID'}
-                    </p>
                     <p className="font-mono font-bold text-white text-lg tracking-wide">
-                      
+                      7209329329m@pnb
                     </p>
                   </div>
                 </div>
