@@ -23,10 +23,9 @@ const Header = () => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = ''; // Using empty string safely removes the inline style
+      document.body.style.overflow = ''; 
     }
     
-    // Cleanup in case the component unmounts while menu is open
     return () => {
       document.body.style.overflow = '';
     };
@@ -63,24 +62,22 @@ const Header = () => {
         <div className="flex items-center justify-between gap-2 xl:gap-4">
           
           {/* --- LEFT: Logo & Brand --- */}
-          {/* Removed shrink-0 and added min-w-0 to allow proper truncation on small screens */}
-          <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50 min-w-0" onClick={() => setMobileMenuOpen(false)}>
+          {/* Removed shrink-0 so it can respond properly to screen size */}
+          <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50" onClick={() => setMobileMenuOpen(false)}>
             <div className={`shrink-0 bg-gradient-to-br from-[#F4C430] to-[#ffd700] rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-[#111111] group-hover:scale-105 transition-transform duration-300 ${scrolled ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-16 md:h-16'}`}>
               <img src="malviyamissionbiharlogo.png" alt="Logo" className="w-[85%] h-[85%] object-contain" />
             </div>
             
-            {/* Added flex, flex-col, and min-w-0 to enable truncation */}
-            <div className="hidden sm:flex flex-col min-w-0">
-              {/* Replaced whitespace-nowrap with truncate */}
+            {/* Switched back to block, using line-clamp for smart wrapping */}
+            <div className="hidden sm:block">
               <h1 
-                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] truncate ${scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`} 
+                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] leading-tight line-clamp-2 ${scrolled ? 'text-base md:text-xl' : 'text-lg md:text-2xl'}`} 
                 style={getFont()}
               >
                 {t('header.title')}
               </h1>
-              {/* Replaced whitespace-nowrap with truncate */}
               <p 
-                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 truncate ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
+                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 mt-0.5 leading-snug line-clamp-1 ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
                 style={getFont()}
               >
                 {t('header.tagline')}
@@ -110,7 +107,6 @@ const Header = () => {
           </nav>
 
           {/* --- RIGHT: Actions (Language, Join CTA, Mobile Toggle) --- */}
-          {/* shrink-0 kept here so actions don't get squished */}
           <div className="flex items-center gap-3 lg:gap-4 xl:gap-5 z-50 shrink-0">
             
             {/* Language Switcher */}
@@ -163,7 +159,6 @@ const Header = () => {
           mobileMenuOpen ? 'opacity-100 visible translate-x-0' : 'opacity-0 invisible translate-x-full'
         }`}
       >
-        {/* Added pb-24 here so content at the very bottom isn't covered by mobile browser UI */}
         <div className="flex flex-col h-full p-6 pb-24 overflow-y-auto">
           <nav className="flex flex-col gap-2">
             {navLinks.map((link) => {
