@@ -173,7 +173,7 @@ const Home = () => {
               <div className="w-full lg:w-2/5 flex-shrink-0 relative">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#F4C430] to-transparent rounded-[2rem] transform -translate-x-4 translate-y-4 -z-10"></div>
                 <img
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBpbmRpYW4lMjBtYW58ZW58MHx8fHwxNzcxNDExNDMwfDA&ixlib=rb-4.1.0&q=85"
+                  src="bipin.jpeg"
                   alt="Director"
                   className="w-full aspect-[4/5] object-cover rounded-[2rem] shadow-xl"
                 />
