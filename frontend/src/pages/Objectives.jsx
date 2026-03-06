@@ -1,24 +1,27 @@
 import React from 'react';
+import { Shield, Star, Users, Lightbulb } from 'lucide-react';
 
 const Team = () => {
-  // Aapka static data yahan hai. Aap yahan se names, images aur designations edit kar sakte hain.
+  // Added icons to your groups to make the section headers look premium
   const teamGroups = [
     {
       id: 'group5',
       headline: "Board of Patrons", 
+      icon: Shield,
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
-        { id: 24, image: "/ru.jpeg", designation: "Patrons", name: "Shri R. U. Singh" },
-        { id: 25, image: "/images/team25.jpg", designation: "Patrons, Bihar", name: "Shri O. P. Srivastava" },
-        { id: 26, image: "/images/team26.jpg", designation: "Patrons", name: "Shri Omprakash Yadav" },
-        { id: 27, image: "/images/team27.jpg", designation: "Patrons", name: "Shri Uday Singh" },
-        { id: 28, image: "/tnsingh.jpeg", designation: "Patrons", name: "Prof. T. N. Singh" }
+        { id: 24, image: "/ru.jpeg", designation: "Patron", name: "Shri R. U. Singh" },
+        { id: 25, image: "/images/team25.jpg", designation: "Patron, Bihar", name: "Shri O. P. Srivastava" },
+        { id: 26, image: "/images/team26.jpg", designation: "Patron", name: "Shri Omprakash Yadav" },
+        { id: 27, image: "/images/team27.jpg", designation: "Patron", name: "Shri Uday Singh" },
+        { id: 28, image: "/tnsingh.jpeg", designation: "Patron", name: "Prof. T. N. Singh" }
       ]
     },
     {
       id: 'group1',
       headline: "Core Leadership", 
-      gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1', 
+      icon: Star,
+      gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
         { id: 1, image: "/bipin.jpeg", designation: "President", name: "Bipin Kumar Singh" },
         { id: 4, image: "/alok.jpeg", designation: "General Secretary", name: "Alok Singh" },
@@ -29,7 +32,8 @@ const Team = () => {
     },
     {
       id: 'group4',
-      headline: "Working Committee (Secretary Board)", 
+      headline: "Working Committee", 
+      icon: Users,
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
         { id: 14, image: "/suman.jpeg", designation: "Secretary", name: "Suman Kumar Singh" },
@@ -47,8 +51,8 @@ const Team = () => {
     {
       id: 'group6',
       headline: "Advisory Committee", 
-      // 12 members fit perfectly into a 4-column grid (3 rows)
-      gridClass: 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
+      icon: Lightbulb,
+      gridClass: 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-6xl mx-auto', 
       members: [
         { id: 29, image: "/images/team29.jpg", designation: "Advisor", name: "Shri Mithilesh Mishra, IAS" },
         { id: 30, image: "/images/team30.jpg", designation: "Advisor", name: "Shri Baidyanath Yadav" },
@@ -61,72 +65,96 @@ const Team = () => {
         { id: 37, image: "/images/team37.jpg", designation: "Advisor", name: "Shri Ravindra Upadhyay" },
         { id: 38, image: "/images/team38.jpg", designation: "Advisor", name: "Shri Rajnikant" },
         { id: 39, image: "/images/team39.jpg", designation: "Advisor", name: "Dr. Anand Rai" },
-        { id: 39, image: "/images/team39.jpg", designation: "Advisor", name: "Dr. Shivendra Jaiswal" },
+        { id: 41, image: "/images/team41.jpg", designation: "Advisor", name: "Dr. Shivendra Jaiswal" },
         { id: 40, image: "/images/team40.jpg", designation: "Advisor", name: "Dr. Vimlendu Singh" }
       ]
     }
-];
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <section className="py-20">
-        <div className="container mx-auto px-4 max-w-7xl">
-          
-          {/* Main Page Heading */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[#111111] mb-4 text-center font-sans">
-            Our Dedicated Team
-          </h1>
-          <div className="w-24 h-1 bg-[#F4C430] mx-auto mb-16"></div>
+  ];
 
-          {/* Rendering the Groups with their Headlines */}
-          <div className="flex flex-col gap-16">
-            {teamGroups.map((group, index) => (
+  return (
+    <div className="min-h-screen bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111] pb-24">
+      
+      {/* Hero Header Section */}
+      <section className="pt-24 pb-16 bg-white relative overflow-hidden border-b border-gray-100">
+        <div className="absolute top-0 inset-x-0 h-full bg-gradient-to-b from-[#F4C430]/5 to-transparent pointer-events-none"></div>
+        <div className="container mx-auto px-4 max-w-7xl relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            <span className="text-[#F4C430] font-bold tracking-widest uppercase mb-4 block text-sm">
+              The People Behind The Mission
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#111111] mb-6 tracking-tight">
+              Our Dedicated Team
+            </h1>
+            <div className="w-24 h-1.5 bg-[#F4C430] mx-auto rounded-full"></div>
+            <p className="mt-8 text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
+              Meet the visionary leaders, dedicated secretaries, and esteemed advisors who guide our organization towards its goals.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Groups Rendering */}
+      <section className="pt-16">
+        <div className="container mx-auto px-4 max-w-[90rem]">
+          <div className="flex flex-col gap-24">
+            
+            {teamGroups.map((group) => (
               <div key={group.id} className="flex flex-col items-center">
                 
-                {/* Intermediate Headline (Jo alag-alag post ke liye hai) */}
+                {/* Enhanced Group Headline */}
                 {group.headline && (
-                  <div className="mb-10 text-center w-full">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                  <div className="mb-12 text-center w-full flex flex-col items-center">
+                    <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-6">
+                      <group.icon className="w-8 h-8 text-[#F4C430]" />
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-[#111111] mb-4">
                       {group.headline}
                     </h2>
-                    {/* Chhoti si underline style ke liye */}
-                    <div className="w-16 h-1 bg-gray-300 mx-auto"></div>
+                    <div className="w-16 h-1 bg-gray-200 rounded-full"></div>
                   </div>
                 )}
 
                 {/* Team Grid */}
-                <div className={`grid gap-8 w-full ${group.gridClass}`}>
+                <div className={`grid gap-6 md:gap-8 w-full ${group.gridClass}`}>
                   {group.members.map((member) => (
                     <div 
                       key={member.id} 
-                      className="bg-white rounded-lg p-5 border border-gray-100 hover:border-[#F4C430] hover:shadow-xl transition-all flex flex-col items-center text-center"
+                      className="group bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 hover:border-[#F4C430]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden"
                     >
-                      {/* Image - Square & Medium Size */}
-                      <div className="w-48 h-48 mb-5 rounded-md overflow-hidden bg-gray-100 border border-gray-200 shadow-sm">
+                      {/* Top Accent Line */}
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#F4C430] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                      {/* Image - Responsive Aspect Ratio */}
+                      <div className="w-full aspect-square mb-5 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 relative">
+                        <div className="absolute inset-0 bg-[#F4C430]/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
                         <img 
                           src={member.image} 
                           alt={member.name} 
-                          className="w-full h-full object-cover"
-                          onError={(e) => { e.target.src = 'https://via.placeholder.com/200?text=No+Image' }} 
+                          className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                          onError={(e) => { 
+                            e.target.onerror = null; 
+                            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=F4C430&color=111111&size=256&font-size=0.33`;
+                          }} 
                         />
                       </div>
 
-                      {/* Designation */}
-                      <p className="text-[#F4C430] font-semibold text-sm uppercase tracking-wider mb-2">
-                        {member.designation}
-                      </p>
-
-                      {/* Name */}
-                      <h3 className="text-xl font-bold text-[#111111]">
-                        {member.name}
-                      </h3>
+                      {/* Content */}
+                      <div className="flex flex-col flex-grow justify-center w-full">
+                        <p className="text-[#F4C430] font-bold text-xs sm:text-sm uppercase tracking-widest mb-2 line-clamp-1">
+                          {member.designation}
+                        </p>
+                        <h3 className="text-lg sm:text-xl font-extrabold text-[#111111] leading-tight group-hover:text-gray-900 transition-colors">
+                          {member.name}
+                        </h3>
+                      </div>
                     </div>
                   ))}
                 </div>
 
               </div>
             ))}
-          </div>
 
+          </div>
         </div>
       </section>
     </div>
