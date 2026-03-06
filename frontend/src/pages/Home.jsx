@@ -237,7 +237,7 @@ const Home = () => {
               <div className="w-full md:w-2/5 flex justify-center">
                 <div className="bg-white p-6 rounded-2xl shadow-2xl transform hover:-translate-y-2 transition-all duration-300">
                   <img
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=organization@bank&pn=Organization"
+                    src="qr.jpeg"
                     alt="Donation QR Code"
                     className="w-48 h-48 md:w-56 md:h-56 object-contain"
                   />
