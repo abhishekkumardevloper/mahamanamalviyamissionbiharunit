@@ -228,7 +228,7 @@ const Home = () => {
                       {t('donation.upiLabel') || 'Official UPI ID'}
                     </p>
                     <p className="font-mono font-bold text-white text-lg tracking-wide">
-                      organization@bank
+                      
                     </p>
                   </div>
                 </div>
