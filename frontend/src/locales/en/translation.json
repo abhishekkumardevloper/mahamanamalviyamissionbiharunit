@@ -198,6 +198,11 @@
     "heading": "Photo Gallery",
     "subheading": "Glimpses of Our Activities"
   },
+  "donation": {
+    "description": "Support the Vision of Service and Education",
+    "upiLabel": "7209329329m.pnb",
+    "scanToDonate": "Scan to Donate"
+  },
   "join": {
     "heading": "Join this Noble Mission",
     "content": "If you are inspired by Malaviya Ji's vision and want to serve society, become a member today.",
