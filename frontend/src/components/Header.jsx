@@ -62,22 +62,21 @@ const Header = () => {
         <div className="flex items-center justify-between gap-2 xl:gap-4">
           
           {/* --- LEFT: Logo & Brand --- */}
-          {/* Removed shrink-0 so it can respond properly to screen size */}
           <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50" onClick={() => setMobileMenuOpen(false)}>
             <div className={`shrink-0 bg-gradient-to-br from-[#F4C430] to-[#ffd700] rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-[#111111] group-hover:scale-105 transition-transform duration-300 ${scrolled ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-16 md:h-16'}`}>
               <img src="malviyamissionbiharlogo.png" alt="Logo" className="w-[85%] h-[85%] object-contain" />
             </div>
             
-            {/* Switched back to block, using line-clamp for smart wrapping */}
-            <div className="hidden sm:block">
+            {/* Removed line-clamp to ensure all 3 words are ALWAYS visible */}
+            <div className="hidden sm:flex flex-col justify-center min-w-max lg:min-w-0">
               <h1 
-                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] leading-tight line-clamp-2 ${scrolled ? 'text-base md:text-xl' : 'text-lg md:text-2xl'}`} 
+                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] leading-tight ${scrolled ? 'text-sm md:text-lg lg:text-xl' : 'text-base md:text-xl lg:text-2xl'}`} 
                 style={getFont()}
               >
                 {t('header.title')}
               </h1>
               <p 
-                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 mt-0.5 leading-snug line-clamp-1 ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
+                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 mt-0.5 leading-snug ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
                 style={getFont()}
               >
                 {t('header.tagline')}
