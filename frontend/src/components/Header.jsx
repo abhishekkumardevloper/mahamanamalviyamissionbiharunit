@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, ChevronRight } from 'lucide-react';
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Add a premium shrink effect when the user scrolls down
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
 
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
@@ -14,108 +33,162 @@ const Header = () => {
   };
 
   const currentLanguage = i18n.language || 'en';
+  const getFont = () => ({
+    fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif'
+  });
 
   const navLinks = [
     { path: '/', label: t('nav.home') },
     { path: '/about', label: t('nav.about') },
     { path: '/mahamana', label: t('nav.mahamana') },
-    { path: '/objectives', label: t('nav.objectives') },
     { path: '/activities', label: t('nav.activities') },
     { path: '/gallery', label: t('nav.gallery') },
-    { path: '/join', label: t('nav.join') },
     { path: '/contact', label: t('nav.contact') }
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#111111] shadow-lg">
-      <div className="container mx-auto px-4 py-3 md:py-4">
-        
-        {/* Top Bar */}
-        <div className="flex items-center justify-between gap-2">
+    <header 
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-[#111111]/95 backdrop-blur-md shadow-2xl py-2 border-b border-white/5' 
+          : 'bg-[#111111] py-4 md:py-5'
+      }`}
+    >
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
           
-          {/* Left: Logo & Title */}
-          <div className="flex items-center gap-3">
-            {/* Logo - Always visible */}
-            <div className="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-[#F4C430] rounded-full flex items-center justify-center overflow-hidden">
-              <img src="malviyamissionbiharlogo.png" alt="Logo" className="w-full h-full object-cover" />
+          {/* --- LEFT: Logo & Brand --- */}
+          <Link to="/" className="flex items-center gap-3 md:gap-4 group z-50" onClick={() => setMobileMenuOpen(false)}>
+            <div className={`shrink-0 bg-gradient-to-br from-[#F4C430] to-[#ffd700] rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-[#111111] group-hover:scale-105 transition-transform duration-300 ${scrolled ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-16 md:h-16'}`}>
+              <img src="malviyamissionbiharlogo.png" alt="Logo" className="w-[85%] h-[85%] object-contain" />
             </div>
             
-            {/* Title & Tagline - HIDDEN on mobile (hidden), VISIBLE on desktop (md:block) */}
-            <div className="hidden md:block">
+            <div className="hidden sm:block">
               <h1 
-                className="text-white font-bold text-xl" 
-                style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}
+                className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] ${scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`} 
+                style={getFont()}
               >
                 {t('header.title')}
               </h1>
               <p 
-                className="text-[#F4C430] text-sm" 
-                style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}
+                className={`text-[#F4C430] font-medium tracking-wide transition-all duration-300 ${scrolled ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'}`} 
+                style={getFont()}
               >
                 {t('header.tagline')}
               </p>
             </div>
-          </div>
+          </Link>
 
-          {/* Right: Language Switcher & Mobile Menu Toggle */}
-          <div className="flex items-center gap-2 md:gap-4">
-            
-            {/* Language Switcher - Compact on mobile, normal on desktop */}
-            <div className="flex items-center gap-1 md:gap-2 bg-[#222222] rounded-full px-2 md:px-4 py-1.5 md:py-2">
-              <Globe className="text-[#F4C430] w-3 h-3 md:w-4 md:h-4 hidden sm:block" />
-              <button
-                onClick={() => changeLanguage('hi')}
-                className={`px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium transition-all ${
-                  currentLanguage === 'hi' ? 'bg-[#F4C430] text-[#111111]' : 'text-white hover:text-[#F4C430]'
-                }`}
-                style={{ fontFamily: 'Noto Sans Devanagari, sans-serif' }}
-              >
-                हिन्दी
-              </button>
-              <span className="text-gray-500 text-xs md:text-sm">|</span>
-              <button
-                onClick={() => changeLanguage('en')}
-                className={`px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium transition-all ${
-                  currentLanguage === 'en' ? 'bg-[#F4C430] text-[#111111]' : 'text-white hover:text-[#F4C430]'
-                }`}
-                style={{ fontFamily: 'Poppins, sans-serif' }}
-              >
-                English
-              </button>
-            </div>
-
-            {/* Hamburger Menu Icon */}
-            <button
-              className="md:hidden text-white p-1 hover:bg-[#222222] rounded-md transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Navigation Dropdown (Mobile) & Inline (Desktop) */}
-        <nav className={`${mobileMenuOpen ? 'block' : 'hidden'} md:block mt-4 md:mt-4`}>
-          <ul className="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-6">
-            {navLinks.map((link) => (
-              <li key={link.path}>
+          {/* --- CENTER: Desktop Navigation --- */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
                 <Link
+                  key={link.path}
                   to={link.path}
-                  className={`block px-4 py-3 md:py-2 rounded-md text-sm font-medium transition-all ${
-                    location.pathname === link.path
-                      ? 'bg-[#F4C430] text-[#111111]'
-                      : 'text-white hover:bg-[#222222] hover:text-[#F4C430]'
+                  className={`relative px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
+                    isActive
+                      ? 'text-[#111111] bg-[#F4C430] shadow-[0_0_15px_rgba(244,196,48,0.3)]'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
-                  style={{ fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif' }}
-                  onClick={() => setMobileMenuOpen(false)}
+                  style={getFont()}
                 >
                   {link.label}
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        
+              );
+            })}
+          </nav>
+
+          {/* --- RIGHT: Actions (Language, Join CTA, Mobile Toggle) --- */}
+          <div className="flex items-center gap-3 lg:gap-5 z-50">
+            
+            {/* Language Switcher */}
+            <div className="flex items-center p-1 bg-black/40 border border-white/10 rounded-full shadow-inner">
+              <button
+                onClick={() => changeLanguage('hi')}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                  currentLanguage === 'hi' ? 'bg-[#F4C430] text-[#111111] shadow-md' : 'text-gray-400 hover:text-white'
+                }`}
+                style={{ fontFamily: 'Noto Sans Devanagari, sans-serif' }}
+              >
+                हिंदी
+              </button>
+              <button
+                onClick={() => changeLanguage('en')}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                  currentLanguage === 'en' ? 'bg-[#F4C430] text-[#111111] shadow-md' : 'text-gray-400 hover:text-white'
+                }`}
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
+                ENG
+              </button>
+            </div>
+
+            {/* Prominent "Join Us" Button (Desktop Only) */}
+            <Link
+              to="/join"
+              className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-[#F4C430] to-[#ffd700] text-[#111111] px-6 py-2.5 rounded-full font-extrabold text-sm hover:shadow-[0_0_20px_rgba(244,196,48,0.4)] transform hover:-translate-y-0.5 transition-all duration-300"
+              style={getFont()}
+            >
+              {t('nav.join')}
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              className="lg:hidden text-[#F4C430] p-2 hover:bg-white/10 rounded-full transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* --- MOBILE NAVIGATION OVERLAY --- */}
+      <div 
+        className={`lg:hidden fixed inset-0 top-[72px] bg-[#111111]/95 backdrop-blur-xl border-t border-white/10 transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? 'opacity-100 visible translate-x-0' : 'opacity-0 invisible translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col h-full p-6 overflow-y-auto">
+          <nav className="flex flex-col gap-2">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`flex items-center justify-between p-4 rounded-xl font-bold text-lg transition-all ${
+                    isActive
+                      ? 'bg-[#F4C430] text-[#111111]'
+                      : 'text-white border border-white/5 hover:bg-white/10'
+                  }`}
+                  style={getFont()}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                  {isActive && <ChevronRight className="w-5 h-5" />}
+                </Link>
+              );
+            })}
+          </nav>
+          
+          {/* Mobile "Join Us" CTA */}
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <Link
+              to="/join"
+              className="flex items-center justify-center gap-2 w-full bg-[#F4C430] text-[#111111] p-4 rounded-xl font-extrabold text-lg"
+              style={getFont()}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {t('nav.join')}
+              <ChevronRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
       </div>
     </header>
   );
