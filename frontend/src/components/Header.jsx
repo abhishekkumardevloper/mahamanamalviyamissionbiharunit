@@ -60,20 +60,16 @@ const Header = () => {
           : 'bg-[#111111] py-3 md:py-4'
       }`}
     >
-      {/* Reduced container padding to shift elements to extreme edges */}
       <div className="container mx-auto px-2">
-        {/* Minimized gap between main sections for better one-line fitting */}
         <div className="flex items-center justify-between gap-1">
           
           {/* --- LEFT: Logo & Brand --- */}
-          {/* Reduced gap between logo icon and text */}
           <Link to="/" className="flex items-center gap-2 group z-50 shrink-0" onClick={() => setMobileMenuOpen(false)}>
             <div className={`shrink-0 bg-gradient-to-br from-[#F4C430] to-[#ffd700] rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-[#111111] group-hover:scale-105 transition-transform duration-300 ${scrolled ? 'w-9 h-9 md:w-11 md:h-11' : 'w-11 h-11 md:w-14 md:h-14'}`}>
               <img src="malviyamissionbiharlogo.png" alt="Logo" className="w-[85%] h-[85%] object-contain" />
             </div>
             
             <div className="hidden sm:block min-w-max">
-              {/* Tagline removed from here */}
               <h1 
                 className={`text-white font-extrabold tracking-tight transition-all duration-300 group-hover:text-[#F4C430] leading-none whitespace-nowrap ${scrolled ? 'text-sm md:text-lg' : 'text-base md:text-xl'}`} 
                 style={getFont()}
@@ -84,7 +80,6 @@ const Header = () => {
           </Link>
 
           {/* --- CENTER: Desktop Navigation --- */}
-          {/* Reduced gaps between nav links to fit everything in one line */}
           <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
@@ -92,7 +87,6 @@ const Header = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  {/* Reduced horizontal padding on links */}
                   className={`relative whitespace-nowrap px-2.5 xl:px-3.5 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
                     isActive
                       ? 'text-[#111111] bg-[#F4C430] shadow-[0_0_15px_rgba(244,196,48,0.3)]'
@@ -107,10 +101,9 @@ const Header = () => {
           </nav>
 
           {/* --- RIGHT: Actions (Language, Join CTA, Mobile Toggle) --- */}
-          {/* Reduced gap between action elements to shift them right and keep space */}
           <div className="flex items-center gap-1.5 md:gap-2 z-50 shrink-0">
             
-            {/* Language Switcher - slightly compacter padding */}
+            {/* Language Switcher */}
             <div className="flex items-center p-0.5 bg-black/40 border border-white/10 rounded-full shadow-inner">
               <button
                 onClick={() => changeLanguage('hi')}
@@ -132,7 +125,7 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Prominent "Join Us" Button (Desktop Only) - compacter padding */}
+            {/* Prominent "Join Us" Button (Desktop Only) */}
             <Link
               to="/join"
               className="hidden lg:flex items-center gap-1.5 bg-gradient-to-r from-[#F4C430] to-[#ffd700] text-[#111111] px-4 xl:px-5 py-2 rounded-full font-extrabold text-sm hover:shadow-[0_0_20px_rgba(244,196,48,0.4)] transform hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
@@ -142,7 +135,7 @@ const Header = () => {
               <ChevronRight className="w-4 h-4" />
             </Link>
 
-            {/* Mobile Hamburger Toggle - compact size */}
+            {/* Mobile Hamburger Toggle */}
             <button
               className="lg:hidden text-[#F4C430] p-1.5 hover:bg-white/10 rounded-full transition-colors shrink-0"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
