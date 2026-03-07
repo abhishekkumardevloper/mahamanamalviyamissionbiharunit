@@ -7,14 +7,13 @@ import {
 
 const Donation = () => {
   const { t, i18n } = useTranslation();
-  const currentLanguage = i18n.language;
+  const currentLanguage = i18n.language || 'en';
   const [copiedField, setCopiedField] = useState(null);
 
   const getFontStyle = () => ({
     fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif',
   });
 
-  // Helper function to copy text to clipboard
   const handleCopy = (text, field) => {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
@@ -22,11 +21,11 @@ const Donation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111] pt-20">
+    // Added flex-grow and min-h-screen to ensure it always pushes the footer down
+    <div className="min-h-screen flex flex-col bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111]">
       
       {/* Hero Header */}
-      <div className="bg-[#111111] py-16 md:py-24 relative overflow-hidden">
-        {/* Decorative background elements */}
+      <div className="bg-[#111111] py-16 md:py-24 relative overflow-hidden mt-[70px]">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#F4C430]/10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2"></div>
         
@@ -44,9 +43,8 @@ const Donation = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="container mx-auto px-4 -mt-8 relative z-20 pb-24">
+      <div className="container mx-auto px-4 -mt-8 relative z-20 pb-24 flex-grow">
         <div className="max-w-6xl mx-auto">
-          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
             {/* LEFT COLUMN: Bank Transfer Details */}
@@ -108,17 +106,16 @@ const Donation = () => {
 
                 <div className="flex flex-col sm:flex-row items-center gap-8 relative z-10">
                   <div className="bg-white p-4 rounded-2xl shadow-inner shrink-0">
-                    {/* Replace with your actual QR code path */}
-                    <img src="qr.jpeg" alt="Donation QR Code" className="w-40 h-40 object-contain" />
+                    <img src="/qr.jpeg" alt="Donation QR Code" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
                   </div>
                   
                   <div className="w-full">
                     <p className="text-gray-400 text-sm mb-2 uppercase tracking-widest font-bold">UPI ID</p>
                     <div className="flex items-center justify-between p-4 rounded-xl bg-white/10 border border-white/10 backdrop-blur-md">
-                      <span className="font-mono font-bold text-lg tracking-wide">7209329329m@pnb</span>
+                      <span className="font-mono font-bold text-lg tracking-wide break-all">7209329329m@pnb</span>
                       <button 
                         onClick={() => handleCopy('7209329329m@pnb', 'UPI')}
-                        className="p-2 bg-white/10 hover:bg-[#F4C430] hover:text-[#111111] text-white rounded-lg transition-all"
+                        className="p-2 ml-2 bg-white/10 hover:bg-[#F4C430] hover:text-[#111111] text-white rounded-lg transition-all shrink-0"
                         title="Copy UPI ID"
                       >
                          {copiedField === 'UPI' ? <CheckCircle2 className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
@@ -138,17 +135,17 @@ const Donation = () => {
                   To help us track your generous contribution and send you a receipt, please inform us after making your transfer.
                 </p>
                 <div className="space-y-3">
-                  <a href="mailto:info@mahamanamission.org" className="flex items-center gap-3 text-gray-700 hover:text-[#111111] group transition-colors">
+                  <a href="mailto:biharunit@malaviyamission.org" className="flex items-center gap-3 text-gray-700 hover:text-[#111111] group transition-colors">
                     <div className="p-2 bg-white rounded-lg shadow-sm group-hover:bg-[#F4C430] transition-colors">
                       <Mail className="w-4 h-4 text-[#111111]" />
                     </div>
-                    <span className="font-semibold">info@mahamanamission.org</span>
+                    <span className="font-semibold break-all">biharunit@malaviyamission.org</span>
                   </a>
-                  <a href="tel:+917209329329" className="flex items-center gap-3 text-gray-700 hover:text-[#111111] group transition-colors">
+                  <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-700 hover:text-[#111111] group transition-colors">
                     <div className="p-2 bg-white rounded-lg shadow-sm group-hover:bg-[#F4C430] transition-colors">
                       <Phone className="w-4 h-4 text-[#111111]" />
                     </div>
-                    <span className="font-semibold">+91 72093 29329</span>
+                    <span className="font-semibold">+91 98765 43210</span>
                   </a>
                 </div>
               </div>
