@@ -11,7 +11,7 @@ import Objectives from "./pages/Objectives";
 import Activities from "./pages/Activities";
 import Gallery from "./pages/Gallery";
 import Join from "./pages/Join";
-import donation from "./pages/donation";
+import Donation from "./pages/donation";
 import Contact from "./pages/Contact";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <Route path="/activities" element={<Activities />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/join" element={<Join />} />
-  <Route path="/donation" element={<donation />} />
+  <Route path="/donation" element={<Donation />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
