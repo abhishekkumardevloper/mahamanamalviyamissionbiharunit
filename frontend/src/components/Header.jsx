@@ -9,10 +9,10 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Add a premium shrink effect when the user scrolls down
+  // Increased scroll threshold to 50 to prevent micro-jitters
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -34,7 +34,6 @@ const Header = () => {
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
     localStorage.setItem('language', lang);
-    // Close mobile menu after language change if open
     if (mobileMenuOpen) setMobileMenuOpen(false);
   };
 
@@ -54,8 +53,9 @@ const Header = () => {
   ];
 
   return (
+    // CHANGED: Replaced "sticky" with "fixed w-full" to prevent layout shifts
     <header 
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${
         scrolled 
           ? 'bg-[#111111]/95 backdrop-blur-md shadow-2xl py-1.5 border-b border-white/5' 
           : 'bg-[#111111] py-3 md:py-4'
