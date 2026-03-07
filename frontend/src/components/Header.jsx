@@ -128,11 +128,11 @@ const Header = () => {
 
             {/* Prominent "Join Us" Button (Desktop Only) */}
             <Link
-              to="/join"
+              to="/donation"
               className="hidden lg:flex items-center gap-1.5 bg-gradient-to-r from-[#F4C430] to-[#ffd700] text-[#111111] px-4 xl:px-5 py-2 rounded-full font-extrabold text-sm hover:shadow-[0_0_20px_rgba(244,196,48,0.4)] transform hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
               style={getFont()}
             >
-              {t('nav.join')}
+              {t('nav.donation')}
               <ChevronRight className="w-4 h-4" />
             </Link>
 
