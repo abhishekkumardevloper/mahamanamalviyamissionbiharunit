@@ -147,10 +147,10 @@ const Home = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 divide-x divide-gray-800/50">
             {[
-              { number: '5+', label: currentLanguage === 'hi' ? 'वर्षों की सेवा' : 'Years of Service' },
-              { number: '1000+', label: currentLanguage === 'hi' ? 'सदस्य' : 'Members' },
-              { number: '500+', label: currentLanguage === 'hi' ? 'कार्यक्रम' : 'Programs' },
-              { number: '100+', label: currentLanguage === 'hi' ? 'सफल परियोजनाएँ' : 'Successful Projects' }
+              { number: '5+', label: currentLanguage === 'hi' ? 'वर्षों की संगठन' : 'Years of Organization' },
+              { number: '500+', label: currentLanguage === 'hi' ? 'सदस्य' : 'Members' },
+              { number: '50+', label: currentLanguage === 'hi' ? 'कार्यक्रम' : 'Programs' },
+              { number: '10000+', label: currentLanguage === 'hi' ? 'लाभार्थी' : 'Beneficiary' }
             ].map((stat, index) => (
               <div key={index} className="text-center group px-4">
                 <div className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#F4C430] to-yellow-200 mb-3 transform group-hover:scale-110 transition-transform duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>
