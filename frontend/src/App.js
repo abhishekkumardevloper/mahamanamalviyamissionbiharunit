@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import AdminApp from "./admin/AdminApp";
 import About from "./pages/About";
 import Mahamana from "./pages/Mahamana";
 import Objectives from "./pages/Objectives";
@@ -25,6 +26,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/mahamana" element={<Mahamana />} />
             <Route path="/objectives" element={<Objectives />} />
+            <Route path="/admin/*" element={<AdminApp />} />
             <Route path="/activities" element={<Activities />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/join" element={<Join />} />
