@@ -5,7 +5,7 @@ import { Toaster } from 'sonner';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import AdminApp from "./pages/admin/AdminApp";
+import AdminApp from "./pages/AdminApp";
 import About from "./pages/About";
 import Mahamana from "./pages/Mahamana";
 import Objectives from "./pages/Objectives";
