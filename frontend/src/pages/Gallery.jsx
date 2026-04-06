@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ZoomIn, Camera, X, ArrowLeft, Calendar, Images } from 'lucide-react';
+import { ZoomIn, Camera, X, ArrowLeft, Calendar, Images, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Gallery = () => {
   const { t, i18n } = useTranslation();
@@ -8,7 +8,7 @@ const Gallery = () => {
   
   // State for Navigation and Modals
   const [selectedAlbum, setSelectedAlbum] = useState(null); // Tracks which event folder is open
-  const [selectedImage, setSelectedImage] = useState(null); // Tracks which image is in the lightbox
+  const [lightboxIndex, setLightboxIndex] = useState(null); // Tracks the index of the currently opened image
 
   // Helper for font consistency
   const getFont = () => ({
@@ -17,15 +17,47 @@ const Gallery = () => {
 
   // Prevent scrolling on the body when the modal is open
   useEffect(() => {
-    if (selectedImage) {
+    if (lightboxIndex !== null) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
     return () => { document.body.style.overflow = 'unset'; };
-  }, [selectedImage]);
+  }, [lightboxIndex]);
 
-  // Structured Data: Events categorized by Year containing multiple images
+  // Navigate to Previous Image
+  const handlePrev = useCallback((e) => {
+    if (e) e.stopPropagation();
+    if (selectedAlbum && lightboxIndex !== null) {
+      setLightboxIndex((prevIndex) => 
+        prevIndex === 0 ? selectedAlbum.images.length - 1 : prevIndex - 1
+      );
+    }
+  }, [selectedAlbum, lightboxIndex]);
+
+  // Navigate to Next Image
+  const handleNext = useCallback((e) => {
+    if (e) e.stopPropagation();
+    if (selectedAlbum && lightboxIndex !== null) {
+      setLightboxIndex((prevIndex) => 
+        prevIndex === selectedAlbum.images.length - 1 ? 0 : prevIndex + 1
+      );
+    }
+  }, [selectedAlbum, lightboxIndex]);
+
+  // Keyboard navigation for Lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'ArrowLeft') handlePrev();
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'Escape') setLightboxIndex(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex, handlePrev, handleNext]);
+
+  // Structured Data: Events with MULTIPLE images added
   const eventAlbums = [
     {
       id: 'event-2024',
@@ -44,6 +76,14 @@ const Gallery = () => {
         {
           url: 'https://images.pexels.com/photos/28380018/pexels-photo-28380018.jpeg',
           title: currentLanguage === 'hi' ? 'सांस्कृतिक नृत्य' : 'Cultural Dance'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1511556820780-d912e42b4980?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'समारोह की शुरुआत' : 'Event Kickoff'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'विशाल जनसमूह' : 'Massive Audience'
         }
       ]
     },
@@ -60,6 +100,14 @@ const Gallery = () => {
         {
           url: 'https://images.unsplash.com/photo-1739242621239-af87dca49b5f',
           title: currentLanguage === 'hi' ? 'समूह कार्य' : 'Group Activity'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1475721025592-f236befec51e?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'विचार मंथन सत्र' : 'Brainstorming Session'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'नेतृत्व प्रशिक्षण' : 'Leadership Training'
         }
       ]
     },
@@ -80,6 +128,14 @@ const Gallery = () => {
         {
           url: 'https://images.unsplash.com/photo-1767675694521-c07577afe514',
           title: currentLanguage === 'hi' ? 'कला प्रतियोगिता' : 'Art Competition'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'कक्षा अध्ययन' : 'Classroom Study'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'शारीरिक शिक्षा' : 'Physical Education'
         }
       ]
     },
@@ -96,6 +152,14 @@ const Gallery = () => {
         {
           url: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80',
           title: currentLanguage === 'hi' ? 'अतिथि स्वागत' : 'Guest Welcome'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'दीप प्रज्वलन' : 'Lamp Lighting'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&q=80',
+          title: currentLanguage === 'hi' ? 'स्वयंसेवक टीम' : 'Volunteer Team'
         }
       ]
     }
@@ -138,20 +202,17 @@ const Gallery = () => {
                   className="group relative overflow-hidden rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer bg-gray-200 aspect-square border border-gray-100"
                   onClick={() => setSelectedAlbum(album)}
                 >
-                  {/* Album Cover Image */}
                   <img
                     src={album.coverImage}
                     alt={album.title}
                     className="w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-1 transition-all duration-700"
                   />
                   
-                  {/* Year Badge */}
                   <div className="absolute top-6 right-6 bg-[#F4C430] text-[#111111] px-4 py-1.5 rounded-full font-bold text-sm shadow-lg flex items-center gap-2 z-20">
                     <Calendar className="w-4 h-4" />
                     {album.year}
                   </div>
 
-                  {/* Gradient Overlay & Text */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/95 via-[#111111]/40 to-transparent flex flex-col justify-end p-8">
                     <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                       <h3 className="text-white font-extrabold text-2xl mb-2 leading-tight" style={getFont()}>
@@ -173,12 +234,15 @@ const Gallery = () => {
               {/* Back Button Area */}
               <div className="mb-10 flex items-center justify-between border-b border-gray-200 pb-6">
                 <button 
-                  onClick={() => setSelectedAlbum(null)}
+                  onClick={() => {
+                    setSelectedAlbum(null);
+                    setLightboxIndex(null);
+                  }}
                   className="group flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 rounded-full font-bold text-gray-700 hover:bg-[#111111] hover:text-white transition-all shadow-sm"
                   style={getFont()}
                 >
                   <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                  {currentLanguage === 'hi' ? 'वापस जाएं' : 'Back to Events'}
+                  {currentLanguage === 'hi' ? 'सभी इवेंट्स पर वापस जाएं' : 'Back to All Events'}
                 </button>
               </div>
 
@@ -188,7 +252,7 @@ const Gallery = () => {
                   <div
                     key={index}
                     className="group relative overflow-hidden rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer bg-gray-100 aspect-[4/3]"
-                    onClick={() => setSelectedImage(image)}
+                    onClick={() => setLightboxIndex(index)}
                   >
                     <img
                       src={image.url}
@@ -213,43 +277,66 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* VIEW 3: FULLSCREEN LIGHTBOX MODAL */}
-      {selectedImage && (
+      {/* VIEW 3: FULLSCREEN SCROLLABLE LIGHTBOX MODAL */}
+      {lightboxIndex !== null && selectedAlbum && (
         <div
-          className="fixed inset-0 bg-[#111111]/95 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-8 animate-fadeIn"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-[#111111]/95 backdrop-blur-xl z-50 flex items-center justify-center animate-fadeIn"
+          onClick={() => setLightboxIndex(null)}
         >
           {/* Prevent clicks inside the content area from closing the modal */}
           <div 
-            className="relative w-full max-w-6xl flex flex-col items-center"
+            className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
+            {/* Top Bar with Image Counter and Close Button */}
+            <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-50 bg-gradient-to-b from-[#111111]/80 to-transparent">
+              <div className="text-white font-medium tracking-widest bg-black/50 px-4 py-2 rounded-full backdrop-blur-md border border-white/10">
+                {lightboxIndex + 1} / {selectedAlbum.images.length}
+              </div>
+              <button
+                className="w-12 h-12 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-[#F4C430] hover:text-[#111111] border border-white/10 transition-all duration-300 group"
+                onClick={() => setLightboxIndex(null)}
+                aria-label="Close modal"
+              >
+                <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
+              </button>
+            </div>
+
+            {/* Left Navigation Arrow */}
             <button
-              className="absolute -top-12 right-0 sm:-right-12 sm:top-0 w-12 h-12 flex items-center justify-center text-white/50 hover:text-[#F4C430] transition-colors group z-50"
-              onClick={() => setSelectedImage(null)}
-              aria-label="Close modal"
+              className="absolute left-4 sm:left-12 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#F4C430] hover:text-[#111111] transition-all duration-300 z-50 group hover:scale-110"
+              onClick={handlePrev}
             >
-              <X className="w-10 h-10 group-hover:rotate-90 transition-transform duration-300" />
+              <ChevronLeft className="w-8 h-8 group-hover:-translate-x-1 transition-transform" />
             </button>
 
-            {/* Main Full-Size Image */}
-            <div className="w-full flex justify-center">
+            {/* Main Full-Size Image Container */}
+            <div className="w-full h-full flex justify-center items-center px-16 sm:px-32">
               <img
-                src={selectedImage.url}
-                alt={selectedImage.title}
-                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/10"
+                key={lightboxIndex} // Force re-render for animation on change
+                src={selectedAlbum.images[lightboxIndex].url}
+                alt={selectedAlbum.images[lightboxIndex].title}
+                className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl animate-fade-in-up"
               />
             </div>
 
-            {/* Caption Banner */}
-            <div className="mt-8 text-center">
-              <span className="inline-block bg-[#F4C430]/10 border border-[#F4C430]/20 px-6 py-3 rounded-full backdrop-blur-sm">
-                <p className="text-[#F4C430] font-bold text-xl tracking-wider uppercase" style={getFont()}>
-                  {selectedImage.title}
+            {/* Right Navigation Arrow */}
+            <button
+              className="absolute right-4 sm:right-12 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#F4C430] hover:text-[#111111] transition-all duration-300 z-50 group hover:scale-110"
+              onClick={handleNext}
+            >
+              <ChevronRight className="w-8 h-8 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            {/* Caption Banner at Bottom */}
+            <div className="absolute bottom-10 left-0 right-0 text-center z-50">
+              <span className="inline-block bg-[#F4C430] text-[#111111] px-8 py-3 rounded-full shadow-[0_10px_30px_rgba(244,196,48,0.3)] transform transition-all">
+                <p className="font-bold text-xl tracking-wide" style={getFont()}>
+                  {selectedAlbum.images[lightboxIndex].title}
                 </p>
               </span>
             </div>
+
           </div>
         </div>
       )}
