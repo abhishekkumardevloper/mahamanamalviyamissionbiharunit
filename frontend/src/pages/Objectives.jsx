@@ -140,10 +140,10 @@ const Team = () => {
 
                       {/* Content */}
                       <div className="flex flex-col flex-grow justify-center w-full">
-                        <h3 className="text-[#F4C430] font-bold text-xs sm:text-sm uppercase tracking-widest mb-2 line-clamp-1">
+                        <h3 className="text-lg sm:text-xl font-extrabold text-[#111111] leading-tight group-hover:text-gray-900 transition-colors">
                           {member.name}
                         </h3>
-                        <p className="text-lg sm:text-xl font-extrabold text-[#111111] leading-tight group-hover:text-gray-900 transition-colors">
+                        <p className="text-[#111111] font-bold text-xs sm:text-sm uppercase tracking-widest mb-2 line-clamp-1">
                           {member.designation}
                         </p>
                       </div>
