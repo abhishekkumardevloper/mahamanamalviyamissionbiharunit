@@ -148,7 +148,7 @@ const Home = () => {
                
                <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-4 border-[#F4C430]/30 shadow-[0_0_40px_rgba(244,196,48,0.15)] group-hover:border-[#F4C430] transition-colors duration-500 z-10 bg-gray-900 flex-shrink-0">
                  <img 
-                   src="/malviya-ji.jpg" 
+                   src="/Madan-Mohan-Malaviya.jpg" 
                    alt="Mahamana Madan Mohan Malaviya" 
                    className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700 transform group-hover:scale-110"
                    onError={(e) => {
