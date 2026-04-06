@@ -28,12 +28,12 @@ const Home = () => {
         </div>
         
         <div className="container mx-auto px-4 z-10 text-center flex flex-col items-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 animate-fade-in-up leading-tight drop-shadow-lg" style={getFontStyle('0.1s')}>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 animate-fade-in-up leading-tight drop-shadow-lg" style={getFontStyle('0.1s')}>
             {t('hero.welcome')}
-          </h1>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 animate-fade-in-up leading-tight drop-shadow-lg" style={getFontStyle('0.1s')}>
+          </h2>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 animate-fade-in-up leading-tight drop-shadow-lg" style={getFontStyle('0.1s')}>
             {t('hero.ready')}
-          </h1>
+          </h2>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <Link
               to="/join"
