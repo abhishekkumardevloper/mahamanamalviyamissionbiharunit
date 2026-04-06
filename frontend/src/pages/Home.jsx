@@ -115,7 +115,7 @@ const Home = () => {
             <div className="w-40 h-40 md:w-56 md:h-56 shrink-0 relative group mx-auto md:mx-0">
               <div className="absolute inset-0 bg-[#F4C430] rounded-full transform translate-x-3 translate-y-3 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-500 opacity-60"></div>
               <img 
-                src="/malviya-ji.jpg" 
+                src="/Madan-Mohan-Malaviya.jpg" 
                 alt="Mahamana Madan Mohan Malaviya" 
                 className="relative w-full h-full object-cover rounded-full border-4 border-[#111111] shadow-lg z-10 grayscale-[15%] group-hover:grayscale-0 transition-all duration-500"
                 onError={(e) => { e.target.src = "https://upload.wikimedia.org/wikipedia/commons/4/4b/Madan_Mohan_Malaviya.jpg"; }}
