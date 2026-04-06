@@ -14,8 +14,9 @@
     "tagline": "Empowering Bihar through Education, Values, and Service"
   },
   "hero": {
-    "welcome": "Welcome to Mahamana Malaviya Mission (Bihar Unit)",
-    "mission": "Our goal \n Education, Culture and Nation building",
+    "welcome": "Mahamana Malaviya Mission (Bihar Unit)",
+    "ready":"Welcomes You All",
+    "mission": "",
     "joinBtn": "Join the Movement",
     "learnMoreBtn": "Learn More",
     "newsLabel": "Latest news",
