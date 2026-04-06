@@ -1,9 +1,11 @@
 import "@/App.css";
 import "./i18n";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ScrollToTop from "./ScrollToTop"; // ✅ added
+
 import Home from "./pages/Home";
 import AdminApp from "./admin/AdminApp";
 import About from "./pages/About";
@@ -19,7 +21,10 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ScrollToTop /> {/* ✅ added here */}
+
         <Header />
+
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -30,10 +35,11 @@ function App() {
             <Route path="/activities" element={<Activities />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/join" element={<Join />} />
-  <Route path="/donation" element={<Donation />} />
+            <Route path="/donation" element={<Donation />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
+
         <Footer />
         <Toaster position="top-right" richColors />
       </BrowserRouter>
