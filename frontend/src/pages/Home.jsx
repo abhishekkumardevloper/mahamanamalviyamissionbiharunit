@@ -16,18 +16,18 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111]">
       
-      {/* Self-contained CSS for the perfect Marquee Ticker and custom masking. 
-        This ensures the animation works immediately without editing tailwind.config.js 
+      {/* Self-contained CSS for the perfect seamless Marquee Ticker and custom masking. 
+        Moving from 0 to -50% with duplicated content creates the infinite loop illusion.
       */}
       <style>{`
         @keyframes ticker {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
         .animate-ticker {
-          display: inline-block;
-          white-space: nowrap;
-          animation: ticker 25s linear infinite;
+          display: flex;
+          width: max-content;
+          animation: ticker 30s linear infinite; 
         }
         .ticker-wrapper:hover .animate-ticker {
           animation-play-state: paused;
@@ -69,7 +69,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* PERFECT NEWS TICKER SECTION */}
+      {/* SEAMLESS NEWS TICKER SECTION */}
       <section className="bg-white border-b border-gray-200 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-20">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4">
@@ -84,12 +84,28 @@ const Home = () => {
             
             {/* Moving Marquee */}
             <div className="flex-1 overflow-hidden fade-edges ticker-wrapper cursor-default">
-              <div className="animate-ticker text-gray-800 font-medium text-sm md:text-base flex items-center gap-8" style={getFontStyle()}>
-                <span>✨ {t('hero.newsText', 'Welcome to Mahamana Malviya Mission Bihar. Join us in our upcoming events and social initiatives.')}</span>
-                <span className="text-gray-300">•</span>
-                <span>📅 Upcoming Event: Annual Gathering 2026 - Registrations now open!</span>
-                <span className="text-gray-300">•</span>
-                <span>🤝 Volunteer training camp scheduled for next month.</span>
+              <div className="animate-ticker text-gray-800 font-medium text-sm md:text-base" style={getFontStyle()}>
+                
+                {/* FIRST SET OF CONTENT */}
+                <div className="flex items-center gap-8 pr-8">
+                  <span>✨ {t('hero.newsText', 'Welcome to Mahamana Malviya Mission Bihar. Join us in our upcoming events and social initiatives.')}</span>
+                  <span className="text-gray-300">•</span>
+                  <span>📅 Upcoming Event: Annual Gathering 2026 - Registrations now open!</span>
+                  <span className="text-gray-300">•</span>
+                  <span>🤝 Volunteer training camp scheduled for next month.</span>
+                  <span className="text-gray-300">•</span>
+                </div>
+
+                {/* SECOND SET OF CONTENT (Identical Duplicate for infinite loop) */}
+                <div className="flex items-center gap-8 pr-8" aria-hidden="true">
+                  <span>✨ {t('hero.newsText', 'Welcome to Mahamana Malviya Mission Bihar. Join us in our upcoming events and social initiatives.')}</span>
+                  <span className="text-gray-300">•</span>
+                  <span>📅 Upcoming Event: Annual Gathering 2026 - Registrations now open!</span>
+                  <span className="text-gray-300">•</span>
+                  <span>🤝 Volunteer training camp scheduled for next month.</span>
+                  <span className="text-gray-300">•</span>
+                </div>
+
               </div>
             </div>
           </div>
@@ -120,16 +136,6 @@ const Home = () => {
               </div>
 
               {/* Floating Stat Badge */}
-              <div className="absolute -bottom-8 -right-8 lg:-right-12 bg-white p-6 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] z-20 border border-gray-50 flex items-center gap-4 transform group-hover:-translate-y-2 transition-transform duration-500 hidden sm:flex">
-                <div className="w-14 h-14 bg-[#111111] rounded-full flex items-center justify-center shrink-0">
-                  <CheckCircle2 className="w-7 h-7 text-[#F4C430]" />
-                </div>
-                <div>
-                  <p className="text-3xl font-extrabold text-[#111111]">10k+</p>
-                  <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Lives Impacted</p>
-                </div>
-              </div>
-            </div>
 
             {/* Right Content Area */}
             <div className="lg:pl-8">
