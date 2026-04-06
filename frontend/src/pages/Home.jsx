@@ -71,7 +71,6 @@ const Home = () => {
       <section className="bg-white border-b border-gray-200 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative z-20">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4">
-            {/* Static Label */}
             <div className="flex items-center gap-2 bg-[#111111] px-5 py-2 rounded-full shadow-md z-10 shrink-0 relative overflow-hidden group">
               <div className="absolute inset-0 bg-[#F4C430] translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               <Newspaper className="text-[#F4C430] group-hover:text-[#111111] w-4 h-4 relative z-10 transition-colors" />
@@ -80,10 +79,8 @@ const Home = () => {
               </span>
             </div>
             
-            {/* Moving Marquee */}
             <div className="flex-1 overflow-hidden fade-edges ticker-wrapper cursor-default">
               <div className="animate-ticker text-gray-800 font-medium text-sm md:text-base" style={getFontStyle()}>
-                {/* FIRST SET OF CONTENT */}
                 <div className="flex items-center gap-8 pr-8">
                   <span>✨ {t('hero.newsText', 'Welcome to Mahamana Malviya Mission Bihar. Join us in our upcoming events and social initiatives.')}</span>
                   <span className="text-gray-300">•</span>
@@ -92,7 +89,6 @@ const Home = () => {
                   <span>🤝 Volunteer training camp scheduled for next month.</span>
                   <span className="text-gray-300">•</span>
                 </div>
-                {/* SECOND SET OF CONTENT */}
                 <div className="flex items-center gap-8 pr-8" aria-hidden="true">
                   <span>✨ {t('hero.newsText', 'Welcome to Mahamana Malviya Mission Bihar. Join us in our upcoming events and social initiatives.')}</span>
                   <span className="text-gray-300">•</span>
@@ -107,58 +103,47 @@ const Home = () => {
         </div>
       </section>
 
-      {/* DEDICATED MALVIYA JI INSPIRATION SECTION */}
-      <section className="py-24 bg-[#111111] text-white relative overflow-hidden">
-        {/* Abstract subtle background glow */}
-        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-[#F4C430]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[80px] translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-20">
+      {/* COMPACT & PROFESSIONAL MALVIYA JI INSPIRATION SECTION */}
+      <section className="py-16 bg-gray-50 relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#111111] to-gray-900 rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center gap-10 md:gap-14">
             
+            {/* Subtle Background Accent */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#F4C430]/10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+            
+            {/* Image Box */}
+            <div className="w-40 h-40 md:w-56 md:h-56 shrink-0 relative group mx-auto md:mx-0">
+              <div className="absolute inset-0 bg-[#F4C430] rounded-full transform translate-x-3 translate-y-3 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-500 opacity-60"></div>
+              <img 
+                src="/malviya-ji.jpg" 
+                alt="Mahamana Madan Mohan Malaviya" 
+                className="relative w-full h-full object-cover rounded-full border-4 border-[#111111] shadow-lg z-10 grayscale-[15%] group-hover:grayscale-0 transition-all duration-500"
+                onError={(e) => { e.target.src = "https://upload.wikimedia.org/wikipedia/commons/4/4b/Madan_Mohan_Malaviya.jpg"; }}
+              />
+            </div>
+
             {/* Text Content */}
-            <div className="w-full lg:w-1/2 lg:pr-10 text-center lg:text-left">
-              <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-                <div className="w-12 h-[2px] bg-[#F4C430]"></div>
-                <span className="text-[#F4C430] font-bold uppercase tracking-[0.2em] text-sm" style={getFontStyle()}>Our Inspiration</span>
-                <div className="w-12 h-[2px] bg-[#F4C430] lg:hidden"></div>
+            <div className="flex-1 text-center md:text-left relative z-10">
+              <div className="inline-flex items-center justify-center md:justify-start gap-3 mb-4">
+                <div className="w-8 h-[2px] bg-[#F4C430]"></div>
+                <span className="text-[#F4C430] font-bold uppercase tracking-widest text-xs" style={getFontStyle()}>Our Inspiration</span>
+                <div className="w-8 h-[2px] bg-[#F4C430] md:hidden"></div>
               </div>
               
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-8 leading-[1.15]" style={getFontStyle()}>
-                Mahamana Pandit <br className="hidden lg:block" />
-                <span className="text-[#F4C430] inline-block mt-2">Madan Mohan Malaviya</span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-5 leading-tight" style={getFontStyle()}>
+                Mahamana Pandit <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F4C430] to-yellow-200">Madan Mohan Malaviya</span>
               </h2>
               
-              <div className="relative mb-8 text-center lg:text-left">
-                <span className="absolute -top-8 left-1/2 lg:-left-6 -translate-x-1/2 lg:translate-x-0 text-7xl text-white/10 font-serif leading-none">"</span>
-                <p className="text-gray-300 text-xl md:text-2xl leading-relaxed italic font-light relative z-10" style={getFontStyle()}>
-                  {t('malviya.quote', 'A truly educated person is one who is guided by the light of knowledge and driven by a heart full of compassion.')}
-                </p>
-              </div>
+              <blockquote className="text-lg md:text-xl text-gray-300 italic mb-5 leading-relaxed relative" style={getFontStyle()}>
+                <span className="absolute -left-4 -top-2 text-4xl text-[#F4C430]/20 font-serif hidden md:block">"</span>
+                {t('malviya.quote', 'A truly educated person is one who is guided by the light of knowledge and driven by a heart full of compassion.')}
+              </blockquote>
               
-              <p className="text-gray-400 text-base md:text-lg leading-relaxed font-light" style={getFontStyle()}>
-                {t('malviya.description', "As the visionary founder of Banaras Hindu University (BHU) and a towering figure in India's independence movement, Mahamana dedicated his life to the pursuit of education, cultural revival, and social harmony. His timeless values continue to light our path, inspiring us to build a society rooted in pride and modern progress.")}
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed font-light max-w-2xl" style={getFontStyle()}>
+                {t('malviya.description', "Visionary founder of Banaras Hindu University and a towering figure in India's independence. His lifelong dedication to education, cultural revival, and social harmony continues to guide our mission towards a brighter, united future.")}
               </p>
             </div>
-
-            {/* Image Composition */}
-            <div className="w-full lg:w-1/2 relative group flex justify-center lg:justify-end">
-               {/* Decorative outer ring */}
-               <div className="absolute inset-0 bg-[#F4C430] rounded-full transform lg:translate-x-6 lg:-translate-y-4 group-hover:scale-105 transition-all duration-700 opacity-20 blur-xl"></div>
-               
-               <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-4 border-[#F4C430]/30 shadow-[0_0_40px_rgba(244,196,48,0.15)] group-hover:border-[#F4C430] transition-colors duration-500 z-10 bg-gray-900 flex-shrink-0">
-                 <img 
-                   src="/Madan-Mohan-Malaviya.jpg" 
-                   alt="Mahamana Madan Mohan Malaviya" 
-                   className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700 transform group-hover:scale-110"
-                   onError={(e) => {
-                     // Fallback image in case the local path fails
-                     e.target.src = "https://upload.wikimedia.org/wikipedia/commons/4/4b/Madan_Mohan_Malaviya.jpg"; 
-                   }}
-                 />
-               </div>
-            </div>
-
+            
           </div>
         </div>
       </section>
