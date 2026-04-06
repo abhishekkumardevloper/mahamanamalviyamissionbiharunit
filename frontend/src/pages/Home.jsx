@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111]">
       {/* Hero Section */}
-      <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[100vh] min-h-[800px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1671512226295-67a722ce5b6b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1Mjh8MHwxfHNlYXJjaHwxfHxCYW5hcmFzJTIwdW5pdmVyc2l0eXxlbnwwfHx8fDE3NzE0MTE0Mzd8MA&ixlib=rb-4.1.0&q=85"
