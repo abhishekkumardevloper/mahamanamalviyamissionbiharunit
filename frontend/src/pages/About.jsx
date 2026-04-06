@@ -48,7 +48,7 @@ const About = () => {
               <div className="absolute inset-0 bg-[#F4C430] rounded-2xl transform translate-x-4 translate-y-4 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6 -z-10"></div>
               <div className="absolute inset-0 border-2 border-[#111111] rounded-2xl transform -translate-x-4 -translate-y-4 transition-transform duration-500 group-hover:-translate-x-2 group-hover:-translate-y-2 -z-20"></div>
               <img
-                src="https://images.unsplash.com/photo-1763262979261-e4ea292a5f8b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHw0fHxJbmRpYW4lMjBlZHVjYXRpb24lMjBoZXJpdGFnZSUyMGN1bHR1cmV8ZW58MHx8fHwxNzcxNDExNDMwfDA&ixlib=rb-4.1.0&q=85"
+                src="/Madan-Mohan-Malaviya.jpg"
                 alt="About Us"
                 className="rounded-2xl shadow-xl w-full object-cover h-[450px] lg:h-[550px] grayscale-[10%] group-hover:grayscale-0 transition-all duration-500"
               />
