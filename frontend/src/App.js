@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ScrollToTop from "./ScrollToTop"; // ✅ added
+import ScrollToTop from "./components/ScrollToTop"; // ✅ added
 
 import Home from "./pages/Home";
 import AdminApp from "./admin/AdminApp";
