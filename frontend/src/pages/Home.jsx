@@ -16,9 +16,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111]">
       
-      {/* Self-contained CSS for the perfect seamless Marquee Ticker and custom masking. 
-        Moving from 0 to -50% with duplicated content creates the infinite loop illusion.
-      */}
+      {/* Self-contained CSS for the perfect seamless Marquee Ticker and custom masking. */}
       <style>{`
         @keyframes ticker {
           0% { transform: translateX(0); }
@@ -85,7 +83,6 @@ const Home = () => {
             {/* Moving Marquee */}
             <div className="flex-1 overflow-hidden fade-edges ticker-wrapper cursor-default">
               <div className="animate-ticker text-gray-800 font-medium text-sm md:text-base" style={getFontStyle()}>
-                
                 {/* FIRST SET OF CONTENT */}
                 <div className="flex items-center gap-8 pr-8">
                   <span>✨ {t('hero.newsText', 'Welcome to Mahamana Malviya Mission Bihar. Join us in our upcoming events and social initiatives.')}</span>
@@ -95,8 +92,7 @@ const Home = () => {
                   <span>🤝 Volunteer training camp scheduled for next month.</span>
                   <span className="text-gray-300">•</span>
                 </div>
-
-                {/* SECOND SET OF CONTENT (Identical Duplicate for infinite loop) */}
+                {/* SECOND SET OF CONTENT */}
                 <div className="flex items-center gap-8 pr-8" aria-hidden="true">
                   <span>✨ {t('hero.newsText', 'Welcome to Mahamana Malviya Mission Bihar. Join us in our upcoming events and social initiatives.')}</span>
                   <span className="text-gray-300">•</span>
@@ -105,9 +101,64 @@ const Home = () => {
                   <span>🤝 Volunteer training camp scheduled for next month.</span>
                   <span className="text-gray-300">•</span>
                 </div>
-
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DEDICATED MALVIYA JI INSPIRATION SECTION */}
+      <section className="py-24 bg-[#111111] text-white relative overflow-hidden">
+        {/* Abstract subtle background glow */}
+        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-[#F4C430]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[80px] translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-20">
+            
+            {/* Text Content */}
+            <div className="w-full lg:w-1/2 lg:pr-10 text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
+                <div className="w-12 h-[2px] bg-[#F4C430]"></div>
+                <span className="text-[#F4C430] font-bold uppercase tracking-[0.2em] text-sm" style={getFontStyle()}>Our Inspiration</span>
+                <div className="w-12 h-[2px] bg-[#F4C430] lg:hidden"></div>
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-8 leading-[1.15]" style={getFontStyle()}>
+                Mahamana Pandit <br className="hidden lg:block" />
+                <span className="text-[#F4C430] inline-block mt-2">Madan Mohan Malaviya</span>
+              </h2>
+              
+              <div className="relative mb-8 text-center lg:text-left">
+                <span className="absolute -top-8 left-1/2 lg:-left-6 -translate-x-1/2 lg:translate-x-0 text-7xl text-white/10 font-serif leading-none">"</span>
+                <p className="text-gray-300 text-xl md:text-2xl leading-relaxed italic font-light relative z-10" style={getFontStyle()}>
+                  {t('malviya.quote', 'A truly educated person is one who is guided by the light of knowledge and driven by a heart full of compassion.')}
+                </p>
+              </div>
+              
+              <p className="text-gray-400 text-base md:text-lg leading-relaxed font-light" style={getFontStyle()}>
+                {t('malviya.description', "As the visionary founder of Banaras Hindu University (BHU) and a towering figure in India's independence movement, Mahamana dedicated his life to the pursuit of education, cultural revival, and social harmony. His timeless values continue to light our path, inspiring us to build a society rooted in pride and modern progress.")}
+              </p>
+            </div>
+
+            {/* Image Composition */}
+            <div className="w-full lg:w-1/2 relative group flex justify-center lg:justify-end">
+               {/* Decorative outer ring */}
+               <div className="absolute inset-0 bg-[#F4C430] rounded-full transform lg:translate-x-6 lg:-translate-y-4 group-hover:scale-105 transition-all duration-700 opacity-20 blur-xl"></div>
+               
+               <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-4 border-[#F4C430]/30 shadow-[0_0_40px_rgba(244,196,48,0.15)] group-hover:border-[#F4C430] transition-colors duration-500 z-10 bg-gray-900 flex-shrink-0">
+                 <img 
+                   src="/malviya-ji.jpg" 
+                   alt="Mahamana Madan Mohan Malaviya" 
+                   className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700 transform group-hover:scale-110"
+                   onError={(e) => {
+                     // Fallback image in case the local path fails
+                     e.target.src = "https://upload.wikimedia.org/wikipedia/commons/4/4b/Madan_Mohan_Malaviya.jpg"; 
+                   }}
+                 />
+               </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -122,10 +173,8 @@ const Home = () => {
             
             {/* Left Image Composition */}
             <div className="relative group mx-auto lg:mx-0 w-full max-w-md lg:max-w-none">
-              {/* Decorative background shape */}
               <div className="absolute -inset-4 bg-gradient-to-tr from-[#F4C430] to-yellow-100 rounded-[2.5rem] transform -rotate-3 group-hover:rotate-0 transition-transform duration-500 opacity-60"></div>
               
-              {/* Main Image */}
               <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-10 aspect-[4/4] lg:aspect-[4/3] bg-gray-100">
                 <img
                   src="/lanka_e8105f8365.jpg"
@@ -135,7 +184,6 @@ const Home = () => {
                 <div className="absolute inset-0 bg-[#111111]/20 group-hover:bg-transparent transition-colors duration-500"></div>
               </div>
 
-              {/* Floating Stat Badge */}
               <div className="absolute -bottom-8 -right-8 lg:-right-12 bg-white p-6 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] z-20 border border-gray-50 flex items-center gap-4 transform group-hover:-translate-y-2 transition-transform duration-500 hidden sm:flex">
                 <div className="w-14 h-14 bg-[#111111] rounded-full flex items-center justify-center shrink-0">
                   <CheckCircle2 className="w-7 h-7 text-[#F4C430]" />
@@ -151,7 +199,7 @@ const Home = () => {
             <div className="lg:pl-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-[3px] bg-[#F4C430] rounded-full"></div>
-                <span className="text-[#111111] font-bold uppercase tracking-[0.2em] text-sm" style={getFontStyle()}>Our Heritage</span>
+                <span className="text-[#111111] font-bold uppercase tracking-[0.2em] text-sm" style={getFontStyle()}>Our Mission</span>
               </div>
               
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#111111] mb-8 leading-[1.15]" style={getFontStyle()}>
