@@ -28,15 +28,12 @@ const Home = () => {
         </div>
         
         <div className="container mx-auto px-4 z-10 text-center flex flex-col items-center">
-          <span className="text-[#F4C430] font-bold tracking-widest uppercase mb-4 text-sm md:text-base animate-fade-in-up" style={getFontStyle()}>
-            Mahamana Malviya Mission
-          </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 animate-fade-in-up leading-tight drop-shadow-lg" style={getFontStyle('0.1s')}>
-            {t('hero.welcome')}
-          </h1>
           <p className="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto font-light animate-fade-in-up leading-relaxed" style={getFontStyle('0.2s')}>
             {t('hero.mission')}
           </p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 animate-fade-in-up leading-tight drop-shadow-lg" style={getFontStyle('0.1s')}>
+            {t('hero.welcome')}
+          </h1>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <Link
               to="/join"
