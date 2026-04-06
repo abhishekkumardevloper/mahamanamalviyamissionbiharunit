@@ -143,7 +143,7 @@ const Team = () => {
                         <h3 className="text-lg sm:text-xl font-extrabold text-[#111111] leading-tight group-hover:text-gray-900 transition-colors">
                           {member.name}
                         </h3>
-                        <p className="text-[#111111] font-bold text-xs sm:text-sm uppercase tracking-widest mb-2 line-clamp-1">
+                        <p className="text-[#F4C430] text-xs sm:text-sm uppercase tracking-widest mb-2 line-clamp-1">
                           {member.designation}
                         </p>
                       </div>
