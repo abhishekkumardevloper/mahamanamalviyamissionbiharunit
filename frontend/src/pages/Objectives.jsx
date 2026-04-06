@@ -10,11 +10,11 @@ const Team = () => {
       icon: Shield,
       gridClass: 'lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 max-w-7xl mx-auto', 
       members: [
-        { id: 24, image: "/ru.jpeg", designation: "Patron", name: "Shri R. U. Singh" },
+        { id: 24, image: "/ru.jpeg", designation: "IAS officer (1984 batch)", name: "Shri R. U. Singh" },
         { id: 25, image: "/images/team25.jpg", designation: "Patron, Bihar", name: "Shri O. P. Srivastava" },
-        { id: 26, image: "/images/team26.jpg", designation: "Patron", name: "Shri Omprakash Yadav" },
+        { id: 26, image: "/images/team26.jpg", designation: "MLC (JDU)", name: "Prof. (Dr.) Virendra Narayan Yadav" },
         { id: 27, image: "/images/team27.jpg", designation: "Patron", name: "Shri Uday Singh" },
-        { id: 28, image: "/tnsingh.jpeg", designation: "Patron", name: "Prof. T. N. Singh" }
+        { id: 28, image: "/tnsingh.jpeg", designation: "Director, IIT Patna", name: "Prof. T. N. Singh" }
       ]
     },
     {
@@ -140,12 +140,12 @@ const Team = () => {
 
                       {/* Content */}
                       <div className="flex flex-col flex-grow justify-center w-full">
-                        <p className="text-[#F4C430] font-bold text-xs sm:text-sm uppercase tracking-widest mb-2 line-clamp-1">
-                          {member.designation}
-                        </p>
-                        <h3 className="text-lg sm:text-xl font-extrabold text-[#111111] leading-tight group-hover:text-gray-900 transition-colors">
+                        <h3 className="text-[#F4C430] font-bold text-xs sm:text-sm uppercase tracking-widest mb-2 line-clamp-1">
                           {member.name}
                         </h3>
+                        <p className="text-lg sm:text-xl font-extrabold text-[#111111] leading-tight group-hover:text-gray-900 transition-colors">
+                          {member.designation}
+                        </p>
                       </div>
                     </div>
                   ))}
