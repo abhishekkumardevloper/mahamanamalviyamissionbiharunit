@@ -74,7 +74,7 @@ const Home = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-[#F4C430] rounded-2xl transform translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
               <img
-                src="https://images.unsplash.com/photo-1761471678603-01c294fab482?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwyfHxJbmRpYW4lMjBlZHVjYXRpb24lMjBoZXJpdGFnZSUyMGN1bHR1cmV8ZW58MHx8fHwxNzcxNDExNDMwfDA&ixlib=rb-4.1.0&q=85"
+                src="/lanka_e8105f8365.jpg"
                 alt="About"
                 className="relative rounded-2xl shadow-xl w-full object-cover aspect-[4/3] z-10 grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
               />
