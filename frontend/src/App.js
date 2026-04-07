@@ -2,6 +2,8 @@ import "@/App.css";
 import "./i18n";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { Toaster } from "sonner";
+
+// Layout Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -27,7 +29,7 @@ import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import VideoTour from "./pages/VideoTour";
 import Store from "./pages/Store";
-import AuthPage from "./pages/AuthPage"; // New Auth Page
+import AuthPage from "./pages/AuthPage"; // Make sure this is imported!
 
 // ==========================================
 // Protected Route Wrapper
@@ -36,7 +38,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // Show a blank screen or a loading spinner while checking auth status
+  // Show a loading spinner while checking auth status
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -50,7 +52,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  // If requires admin but user is a regular client, redirect to home
+  // If route requires admin but user is a regular client, redirect to home
   if (requireAdmin && user.role !== 'admin') {
     return <Navigate to="/" replace />;
   }
@@ -67,7 +69,9 @@ function Shell() {
 
   return (
     <>
+      {/* Hide standard Header on Admin routes */}
       {!admin && <Header />}
+      
       <main>
         <Routes>
           {/* Public Routes */}
@@ -102,7 +106,11 @@ function Shell() {
           />
         </Routes>
       </main>
+
+      {/* Hide standard Footer on Admin routes */}
       {!admin && <Footer />}
+      
+      {/* Toast Notifications */}
       <Toaster position="top-right" richColors />
     </>
   );
@@ -114,7 +122,7 @@ function Shell() {
 function App() {
   return (
     <div className="App">
-      {/* 1. Wrap everything in the AuthProvider */}
+      {/* Wrap everything in AuthProvider so auth state is available globally */}
       <AuthProvider>
         <BrowserRouter>
           <ScrollToTop />
