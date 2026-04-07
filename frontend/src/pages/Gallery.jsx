@@ -1,19 +1,66 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ZoomIn, Camera, X, ArrowLeft, Calendar, Images, ChevronLeft, ChevronRight } from 'lucide-react';
+import { 
+  ZoomIn, Camera, X, ArrowLeft, Calendar, 
+  Images, ChevronLeft, ChevronRight, Loader2, AlertCircle 
+} from 'lucide-react';
 
 const Gallery = () => {
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
   
+  // Base API URL
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+  // State for Data
+  const [albums, setAlbums] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   // State for Navigation and Modals
-  const [selectedAlbum, setSelectedAlbum] = useState(null); // Tracks which event folder is open
-  const [lightboxIndex, setLightboxIndex] = useState(null); // Tracks the index of the currently opened image
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   // Helper for font consistency
   const getFont = () => ({
     fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif'
   });
+
+  // Fetch Events from Backend and format them as Albums
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/events`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch gallery albums.');
+        }
+        const data = await response.json();
+        
+        // Filter out events that don't have any images, then format them
+        const formattedAlbums = data
+          .filter(event => event.images && event.images.length > 0)
+          .map(event => ({
+            id: event.id,
+            year: event.year,
+            title: event.title,
+            coverImage: event.images[0], // Use first image as cover
+            images: event.images.map((imgUrl, idx) => ({
+              url: imgUrl,
+              // Since the backend 'images' is just a list of strings, we generate a title
+              title: `${event.title} - ${idx + 1}` 
+            }))
+          }));
+
+        setAlbums(formattedAlbums);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAlbums();
+  }, [API_BASE_URL]);
 
   // Prevent scrolling on the body when the modal is open
   useEffect(() => {
@@ -57,114 +104,6 @@ const Gallery = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxIndex, handlePrev, handleNext]);
 
-  // Structured Data: Events with MULTIPLE images added
-  const eventAlbums = [
-    {
-      id: 'event-2024',
-      year: '2024',
-      title: currentLanguage === 'hi' ? 'वार्षिक सभा 2024' : 'Annual Gathering 2024',
-      coverImage: 'https://images.unsplash.com/flagged/photo-1574097656146-0b43b7660cb6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxJbmRpYW4lMjBldmVudHxlbnwwfHx8fDE3NzE0MTUwMDB8MA&ixlib=rb-4.1.0&q=85',
-      images: [
-        {
-          url: 'https://images.unsplash.com/flagged/photo-1574097656146-0b43b7660cb6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxJbmRpYW4lMjBldmVudHxlbnwwfHx8fDE3NzE0MTUwMDB8MA&ixlib=rb-4.1.0&q=85',
-          title: currentLanguage === 'hi' ? 'मुख्य भाषण' : 'Keynote Speech'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1524069290683-0457abfe42c3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxhd2FyZCUyMGNlcmVtb255fGVufDB8fHx8MTc3MTQxNTEwMHww&ixlib=rb-4.1.0&q=85',
-          title: currentLanguage === 'hi' ? 'पुरस्कार वितरण' : 'Award Distribution'
-        },
-        {
-          url: 'https://images.pexels.com/photos/28380018/pexels-photo-28380018.jpeg',
-          title: currentLanguage === 'hi' ? 'सांस्कृतिक नृत्य' : 'Cultural Dance'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1511556820780-d912e42b4980?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'समारोह की शुरुआत' : 'Event Kickoff'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'विशाल जनसमूह' : 'Massive Audience'
-        }
-      ]
-    },
-    {
-      id: 'event-2023',
-      year: '2023',
-      title: currentLanguage === 'hi' ? 'शैक्षिक संगोष्ठी' : 'Educational Seminar',
-      coverImage: 'https://images.unsplash.com/photo-1522661067900-ab829854a57f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxzZW1pbmFyfGVufDB8fHx8MTc3MTQxNTA1MHww&ixlib=rb-4.1.0&q=85',
-      images: [
-        {
-          url: 'https://images.unsplash.com/photo-1522661067900-ab829854a57f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxzZW1pbmFyfGVufDB8fHx8MTc3MTQxNTA1MHww&ixlib=rb-4.1.0&q=85',
-          title: currentLanguage === 'hi' ? 'पैनल चर्चा' : 'Panel Discussion'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1739242621239-af87dca49b5f',
-          title: currentLanguage === 'hi' ? 'समूह कार्य' : 'Group Activity'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1475721025592-f236befec51e?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'विचार मंथन सत्र' : 'Brainstorming Session'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'नेतृत्व प्रशिक्षण' : 'Leadership Training'
-        }
-      ]
-    },
-    {
-      id: 'event-2022',
-      year: '2022',
-      title: currentLanguage === 'hi' ? 'ग्रामीण शिक्षा पहल' : 'Rural Education Initiative',
-      coverImage: 'https://images.unsplash.com/photo-1629872928185-171e13c8e58b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxlZHVjYXRpb24lMjBydXJhbCUyMGluZGlhfGVufDB8fHx8MTc3MTQxNTA4MHww&ixlib=rb-4.1.0&q=85',
-      images: [
-        {
-          url: 'https://images.unsplash.com/photo-1629872928185-171e13c8e58b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxlZHVjYXRpb24lMjBydXJhbCUyMGluZGlhfGVufDB8fHx8MTc3MTQxNTA4MHww&ixlib=rb-4.1.0&q=85',
-          title: currentLanguage === 'hi' ? 'छात्र सभा' : 'Student Gathering'
-        },
-        {
-          url: 'https://images.pexels.com/photos/2802403/pexels-photo-2802403.jpeg',
-          title: currentLanguage === 'hi' ? 'स्वतंत्रता दिवस' : 'Independence Day'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1767675694521-c07577afe514',
-          title: currentLanguage === 'hi' ? 'कला प्रतियोगिता' : 'Art Competition'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'कक्षा अध्ययन' : 'Classroom Study'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'शारीरिक शिक्षा' : 'Physical Education'
-        }
-      ]
-    },
-    {
-      id: 'event-2021',
-      year: '2021',
-      title: currentLanguage === 'hi' ? 'स्थापना दिवस' : 'Foundation Day',
-      coverImage: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80',
-      images: [
-        {
-          url: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'उद्घाटन समारोह' : 'Opening Ceremony'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'अतिथि स्वागत' : 'Guest Welcome'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'दीप प्रज्वलन' : 'Lamp Lighting'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&q=80',
-          title: currentLanguage === 'hi' ? 'स्वयंसेवक टीम' : 'Volunteer Team'
-        }
-      ]
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111]">
       
@@ -193,10 +132,30 @@ const Gallery = () => {
       <section className="py-16 md:py-24 min-h-[500px]">
         <div className="container mx-auto px-4 max-w-[90rem]">
           
-          {/* VIEW 1: ALBUM FOLDERS */}
-          {!selectedAlbum ? (
+          {/* Handle Loading & Error States First */}
+          {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {eventAlbums.map((album) => (
+              {[1, 2, 3, 4].map((skeleton) => (
+                <div key={skeleton} className="animate-pulse bg-gray-200 rounded-[2rem] aspect-square border border-gray-100"></div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center py-20 bg-red-50 rounded-3xl border border-red-100">
+              <AlertCircle className="w-16 h-16 text-red-400 mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Failed to load gallery</h3>
+              <p className="text-gray-500">{error}</p>
+            </div>
+          ) : albums.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
+              <Images className="w-16 h-16 text-gray-300 mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 mb-2">No Images Found</h3>
+              <p className="text-gray-500">Check back later for updates to our event gallery.</p>
+            </div>
+          ) : !selectedAlbum ? (
+            
+            /* VIEW 1: ALBUM FOLDERS */
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {albums.map((album) => (
                 <div
                   key={album.id}
                   className="group relative overflow-hidden rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer bg-gray-200 aspect-square border border-gray-100"
@@ -264,7 +223,7 @@ const Gallery = () => {
                         <div className="w-10 h-10 bg-[#F4C430] rounded-full flex items-center justify-center text-[#111111]">
                           <ZoomIn className="w-5 h-5" />
                         </div>
-                        <p className="text-white font-bold text-lg" style={getFont()}>
+                        <p className="text-white font-bold text-lg truncate" style={getFont()}>
                           {image.title}
                         </p>
                       </div>
@@ -280,7 +239,7 @@ const Gallery = () => {
       {/* VIEW 3: FULLSCREEN SCROLLABLE LIGHTBOX MODAL */}
       {lightboxIndex !== null && selectedAlbum && (
         <div
-          className="fixed inset-0 bg-[#111111]/95 backdrop-blur-xl z-50 flex items-center justify-center animate-fadeIn"
+          className="fixed inset-0 bg-[#111111]/95 backdrop-blur-xl z-[100] flex items-center justify-center animate-fadeIn"
           onClick={() => setLightboxIndex(null)}
         >
           {/* Prevent clicks inside the content area from closing the modal */}
@@ -289,7 +248,7 @@ const Gallery = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Bar with Image Counter and Close Button */}
-            <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-50 bg-gradient-to-b from-[#111111]/80 to-transparent">
+            <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-[110] bg-gradient-to-b from-[#111111]/80 to-transparent">
               <div className="text-white font-medium tracking-widest bg-black/50 px-4 py-2 rounded-full backdrop-blur-md border border-white/10">
                 {lightboxIndex + 1} / {selectedAlbum.images.length}
               </div>
@@ -304,7 +263,7 @@ const Gallery = () => {
 
             {/* Left Navigation Arrow */}
             <button
-              className="absolute left-4 sm:left-12 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#F4C430] hover:text-[#111111] transition-all duration-300 z-50 group hover:scale-110"
+              className="absolute left-4 sm:left-12 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#F4C430] hover:text-[#111111] transition-all duration-300 z-[110] group hover:scale-110"
               onClick={handlePrev}
             >
               <ChevronLeft className="w-8 h-8 group-hover:-translate-x-1 transition-transform" />
@@ -322,14 +281,14 @@ const Gallery = () => {
 
             {/* Right Navigation Arrow */}
             <button
-              className="absolute right-4 sm:right-12 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#F4C430] hover:text-[#111111] transition-all duration-300 z-50 group hover:scale-110"
+              className="absolute right-4 sm:right-12 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#F4C430] hover:text-[#111111] transition-all duration-300 z-[110] group hover:scale-110"
               onClick={handleNext}
             >
               <ChevronRight className="w-8 h-8 group-hover:translate-x-1 transition-transform" />
             </button>
 
             {/* Caption Banner at Bottom */}
-            <div className="absolute bottom-10 left-0 right-0 text-center z-50">
+            <div className="absolute bottom-10 left-0 right-0 text-center z-[110]">
               <span className="inline-block bg-[#F4C430] text-[#111111] px-8 py-3 rounded-full shadow-[0_10px_30px_rgba(244,196,48,0.3)] transform transition-all">
                 <p className="font-bold text-xl tracking-wide" style={getFont()}>
                   {selectedAlbum.images[lightboxIndex].title}
