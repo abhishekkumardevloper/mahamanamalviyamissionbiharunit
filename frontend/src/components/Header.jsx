@@ -47,6 +47,11 @@ const Header = () => {
     { path: '/mahamana', label: t('nav.mahamana') },
     { path: '/objectives', label: t('nav.objectives') },
     { path: '/activities', label: t('nav.activities') },
+    { path: '/news', label: 'News' },
+    { path: '/events', label: 'Events' },
+    { path: '/blog', label: 'Blog' },
+    { path: '/video-tour', label: 'Video Tour' },
+    { path: '/store', label: 'Store' },
     { path: '/gallery', label: t('nav.gallery') },
     { path: '/contact', label: t('nav.contact') }
   ];
@@ -179,7 +184,7 @@ const Header = () => {
             {/* Mobile "Join Us" CTA */}
             <div className="mt-8 pt-8 border-t border-white/10">
               <Link
-                to="/join"
+                to="/donation"
                 className="flex items-center justify-center gap-2 w-full bg-[#F4C430] text-[#111111] p-4 rounded-xl font-extrabold text-lg"
                 style={getFont()}
                 onClick={() => setMobileMenuOpen(false)}
