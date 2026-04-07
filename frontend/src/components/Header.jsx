@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, ChevronDown } from 'lucide-react';
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeMobileDropdown, setActiveMobileDropdown] = useState(null); // Tracks open mobile dropdown
 
   // Increased scroll threshold to 50 to prevent micro-jitters
   useEffect(() => {
@@ -42,17 +43,34 @@ const Header = () => {
     fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif'
   });
 
+  const toggleMobileDropdown = (label) => {
+    setActiveMobileDropdown(activeMobileDropdown === label ? null : label);
+  };
+
+  // Restructured navLinks to include dropdown menus
   const navLinks = [
-    { path: '/about', label: t('nav.about') },
-    { path: '/mahamana', label: t('nav.mahamana') },
-    { path: '/objectives', label: t('nav.objectives') },
+    {
+      label: currentLanguage === 'hi' ? 'हमारे बारे में' : 'About Us', // Fallback or use t('nav.about_us')
+      dropdown: true,
+      items: [
+        { path: '/about', label: t('nav.about') },
+        { path: '/mahamana', label: t('nav.mahamana') },
+        { path: '/objectives', label: t('nav.objectives') }
+      ]
+    },
     { path: '/activities', label: t('nav.activities') },
-    { path: '/news', label: 'News' },
-    { path: '/events', label: 'Events' },
-    { path: '/blog', label: 'Blog' },
-    { path: '/video-tour', label: 'Video Tour' },
+    {
+      label: currentLanguage === 'hi' ? 'मीडिया' : 'Media',
+      dropdown: true,
+      items: [
+        { path: '/news', label: 'News' },
+        { path: '/events', label: 'Events' },
+        { path: '/blog', label: 'Blog' },
+        { path: '/video-tour', label: 'Video Tour' },
+        { path: '/gallery', label: t('nav.gallery') }
+      ]
+    },
     { path: '/store', label: 'Store' },
-    { path: '/gallery', label: t('nav.gallery') },
     { path: '/contact', label: t('nav.contact') }
   ];
 
@@ -87,6 +105,52 @@ const Header = () => {
             {/* --- CENTER: Desktop Navigation --- */}
             <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
               {navLinks.map((link) => {
+                
+                // If it's a Dropdown Menu
+                if (link.dropdown) {
+                  // Check if any sub-item is active
+                  const isAnyChildActive = link.items.some(item => location.pathname === item.path);
+                  
+                  return (
+                    <div className="relative group" key={link.label}>
+                      <button 
+                        className={`flex items-center gap-1 relative whitespace-nowrap px-2.5 xl:px-3.5 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
+                          isAnyChildActive 
+                            ? 'text-[#F4C430]' 
+                            : 'text-gray-300 hover:text-white hover:bg-white/10'
+                        }`}
+                        style={getFont()}
+                      >
+                        {link.label}
+                        <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:-rotate-180" />
+                      </button>
+
+                      {/* Dropdown Container */}
+                      <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out z-50">
+                        <div className="bg-[#1a1a1a] border border-white/10 rounded-xl shadow-2xl p-2 overflow-hidden backdrop-blur-xl">
+                          {link.items.map(subItem => {
+                            const isSubActive = location.pathname === subItem.path;
+                            return (
+                              <Link 
+                                key={subItem.path} 
+                                to={subItem.path} 
+                                className={`block px-4 py-2.5 mb-1 last:mb-0 rounded-lg text-sm font-semibold transition-all ${
+                                  isSubActive 
+                                    ? 'bg-[#F4C430] text-[#111111]' 
+                                    : 'text-gray-300 hover:bg-white/10 hover:text-white hover:translate-x-1'
+                                }`}
+                              >
+                                {subItem.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
+                // Normal Link Render
                 const isActive = location.pathname === link.path;
                 return (
                   <Link
@@ -161,6 +225,45 @@ const Header = () => {
           <div className="flex flex-col h-full p-6 pb-24 overflow-y-auto">
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => {
+                
+                // If it's a Dropdown on Mobile (Accordion logic)
+                if (link.dropdown) {
+                  const isExpanded = activeMobileDropdown === link.label;
+                  return (
+                    <div key={link.label} className="flex flex-col gap-1">
+                      <button
+                        className="flex items-center justify-between p-4 rounded-xl font-bold text-lg transition-all text-white border border-white/5 hover:bg-white/10"
+                        onClick={() => toggleMobileDropdown(link.label)}
+                        style={getFont()}
+                      >
+                        {link.label}
+                        <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? '-rotate-180 text-[#F4C430]' : 'text-gray-400'}`} />
+                      </button>
+                      
+                      <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-96 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+                        <div className="flex flex-col gap-2 pl-4 border-l-2 border-white/10 ml-4 py-2">
+                          {link.items.map((subItem) => {
+                            const isSubActive = location.pathname === subItem.path;
+                            return (
+                              <Link
+                                key={subItem.path}
+                                to={subItem.path}
+                                className={`p-2 rounded-lg font-semibold text-base transition-all ${
+                                  isSubActive ? 'text-[#F4C430]' : 'text-gray-400 hover:text-white hover:translate-x-1'
+                                }`}
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                {subItem.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
+                // Standard Mobile Link
                 const isActive = location.pathname === link.path;
                 return (
                   <Link
@@ -198,10 +301,6 @@ const Header = () => {
       </header>
 
       {/* --- INVISIBLE SPACER --- */}
-      {/* Because the header is "fixed", it doesn't take up space in the document. 
-        This invisible div forces the page content down by exactly the height of the default header (68px on mobile, 88px on desktop).
-        This prevents overlapping on load AND prevents layout jumping when the fixed header shrinks on scroll!
-      */}
       <div className="h-[68px] md:h-[88px] w-full shrink-0"></div>
     </>
   );
