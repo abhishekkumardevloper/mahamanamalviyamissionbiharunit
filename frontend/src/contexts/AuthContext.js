@@ -1,158 +1,95 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback
-} from "react";
-import axios from "axios";
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
-const AuthContext = createContext();
+// Create Context
+const AuthContext = createContext(null);
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+// Custom Hook for easy usage
+export const useAuth = () => useContext(AuthContext);
 
-/* ✅ IMPORTANT:
-   NO trailing slash at end
-*/
-const API_BASE = "http://127.0.0.1:8000/api";
-
-/* ✅ Create axios instance */
-const api = axios.create({
-  baseURL: API_BASE
-});
-
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(() =>
-    localStorage.getItem("token")
-  );
+  const [token, setToken] = useState(localStorage.getItem('access_token') || null);
   const [loading, setLoading] = useState(true);
 
-  // ---------------- SET TOKEN ----------------
-  const setAuthToken = (newToken) => {
-    if (newToken) {
-      localStorage.setItem("token", newToken);
-      api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-    } else {
-      localStorage.removeItem("token");
-      delete api.defaults.headers.common["Authorization"];
-    }
-    setToken(newToken);
-  };
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-  // ---------------- LOGOUT ----------------
-  const logout = useCallback(() => {
-    setAuthToken(null);
-    setUser(null);
-  }, []);
-
-  // ---------------- FETCH CURRENT USER ----------------
-  const fetchUser = useCallback(async () => {
-    try {
-      const response = await api.get("/auth/me");
-      setUser(response.data);
-    } catch (error) {
-      console.error("Fetch user failed:", error.response?.data);
-      logout();
-    } finally {
-      setLoading(false);
-    }
-  }, [logout]);
-
-  // ---------------- INITIAL LOAD ----------------
- // ---------------- INITIAL LOAD ----------------
+  // Check token validity on app load
   useEffect(() => {
-    const initializeAuth = async () => {
-      if (token) {
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        // Agar user state mein pehle se hai (jaise login ke baad), toh dobara fetch mat karo
-        if (!user) {
-          await fetchUser();
+    const fetchUser = async () => {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/me`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
         } else {
-          setLoading(false);
+          // Token is invalid/expired
+          logout();
         }
-      } else {
+      } catch (error) {
+        console.error("Auth verification failed", error);
+        logout();
+      } finally {
         setLoading(false);
       }
     };
 
-    initializeAuth();
-  }, [token, fetchUser, user]);
+    fetchUser();
+  }, [token, API_BASE_URL]);
 
-  // ---------------- LOGIN ----------------
   const login = async (email, password) => {
-    try {
-      const response = await api.post("/auth/login", {
-        email,
-        password
-      });
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
 
-      const newToken =
-        response.data.token || response.data.access_token;
-
-      if (!newToken) {
-        throw new Error("Token missing from backend");
-      }
-
-      setAuthToken(newToken);
-      setUser(response.data.user);
-
-      return response.data.user;
-    } catch (error) {
-      console.error("Login error:", error.response?.data);
-      throw error;
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || 'Login failed');
     }
+
+    const data = await response.json();
+    setToken(data.access_token);
+    setUser(data.user);
+    localStorage.setItem('access_token', data.access_token);
+    return data.user;
   };
 
-  // ---------------- REGISTER ----------------
-  const register = async (
-    name,
-    email,
-    password,
-    phone,
-    role = "user"
-  ) => {
-    try {
-      const response = await api.post("/auth/register", {
-        name,
-        email,
-        password,
-        phone,
-        role
-      });
+  const register = async (name, email, password) => {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, role: 'client' }) // Default to client
+    });
 
-      const newToken =
-        response.data.token || response.data.access_token;
-
-      if (!newToken) {
-        throw new Error("Token missing from backend");
-      }
-
-      setAuthToken(newToken);
-      setUser(response.data.user);
-
-      return response.data.user;
-    } catch (error) {
-      console.error("Register error:", error.response?.data);
-      throw error;
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || 'Registration failed');
     }
+
+    // Auto-login after successful registration
+    return await login(email, password);
+  };
+
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem('access_token');
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        token,
-        login,
-        register,
-        logout,
-        loading,
-        api   // 🔥 export api for other pages
-      }}
-    >
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
