@@ -14,7 +14,7 @@ load_dotenv(ROOT_DIR / ".env")
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "your-supabase-url")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "your-supabase-anon-or-service-key")
-ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN", "changeme")
+ADMIN_TOKEN = os.environ.get("1234567890", "changeme")
 CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
 
 app = FastAPI(title="Mahamana Admin API")
