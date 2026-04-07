@@ -1,21 +1,31 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional
 
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, Header, HTTPException, Query, status
+from fastapi import Depends, FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from pydantic import BaseModel, EmailStr, Field
 from supabase import Client, create_client
 import os
+import jwt
+from passlib.context import CryptContext
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / ".env")
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "your-supabase-url")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "your-supabase-anon-or-service-key")
-ADMIN_TOKEN = os.environ.get("1234567890", "changeme")
 CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
+
+# --- AUTH CONFIGURATION ---
+SECRET_KEY = os.environ.get("SECRET_KEY", "your-super-secret-jwt-key-change-in-production")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 Days
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+security = HTTPBearer()
 
 app = FastAPI(title="Mahamana Admin API")
 app.add_middleware(
@@ -28,10 +38,24 @@ app.add_middleware(
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+# ==========================================
+# MODELS
+# ==========================================
 
-class LoginPayload(BaseModel):
-    token: str = Field(min_length=1)
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=6)
+    name: str = Field(min_length=2)
+    role: str = "client" # Can be 'client' or 'admin'
 
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    user: dict
 
 class PageModel(BaseModel):
     title: str = Field(min_length=2)
@@ -40,20 +64,17 @@ class PageModel(BaseModel):
     language: str = "en"
     published: bool = False
 
-
 class GalleryItemModel(BaseModel):
     url: str = Field(min_length=5)
     caption: str = ""
     alt: str = ""
     order: int = 0
 
-
 class MemberModel(BaseModel):
     name: str = Field(min_length=2)
     role: str = ""
     photo_url: str = ""
     bio: str = ""
-
 
 class NewsModel(BaseModel):
     title: str = Field(min_length=3)
@@ -62,7 +83,6 @@ class NewsModel(BaseModel):
     date: Optional[str] = None
     status: str = "draft"
     published: bool = False
-
 
 class ActivityModel(BaseModel):
     title: str = Field(min_length=3)
@@ -74,7 +94,6 @@ class ActivityModel(BaseModel):
     status: str = "draft"
     published: bool = False
 
-
 class EventModel(BaseModel):
     year: int = Field(ge=1900, le=2200)
     title: str = Field(min_length=3)
@@ -84,7 +103,6 @@ class EventModel(BaseModel):
     video_links: List[str] = []
     status: str = "draft"
     published: bool = False
-
 
 class BlogModel(BaseModel):
     title: str = Field(min_length=3)
@@ -96,7 +114,6 @@ class BlogModel(BaseModel):
     status: str = "draft"
     published: bool = False
 
-
 class VideoModel(BaseModel):
     title: str = Field(min_length=3)
     video_url: str = Field(min_length=8)
@@ -105,7 +122,6 @@ class VideoModel(BaseModel):
     event_year: Optional[int] = None
     status: str = "draft"
     published: bool = False
-
 
 class StoreItemModel(BaseModel):
     product_name: str = Field(min_length=2)
@@ -117,7 +133,6 @@ class StoreItemModel(BaseModel):
     status: str = "active"
     published: bool = True
 
-
 class DonationModel(BaseModel):
     donor_name: str = Field(min_length=2)
     email: Optional[str] = None
@@ -128,17 +143,54 @@ class DonationModel(BaseModel):
     status: str = "submitted"
 
 
-def check_admin_token(x_admin_token: Optional[str] = Header(None)):
-    if x_admin_token != ADMIN_TOKEN:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid admin token")
+# ==========================================
+# AUTHENTICATION & SECURITY UTILS
+# ==========================================
 
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + (expires_delta if expires_delta else timedelta(minutes=15))
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    res = supabase.table("users").select("*").eq("email", email).execute()
+    if not res.data:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    return res.data[0]
+
+def require_admin(user: dict = Depends(get_current_user)):
+    if user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return user
+
+def require_client(user: dict = Depends(get_current_user)):
+    # Both clients and admins can access client routes
+    if user.get("role") not in ["client", "admin"]:
+        raise HTTPException(status_code=403, detail="Access denied")
+    return user
 
 def with_timestamps(payload: Dict) -> Dict:
     now = datetime.utcnow().isoformat()
     payload.setdefault("created_at", now)
     payload["updated_at"] = now
     return payload
-
 
 def handle_db_response(response, single: bool = False):
     if not response.data:
@@ -147,26 +199,90 @@ def handle_db_response(response, single: bool = False):
         return []
     return response.data[0] if single else response.data
 
+# ==========================================
+# AUTHENTICATION ROUTES
+# ==========================================
+
+@app.post("/auth/register", status_code=status.HTTP_201_CREATED)
+def register_user(payload: UserCreate):
+    # Check if user exists
+    existing = supabase.table("users").select("id").eq("email", payload.email).execute()
+    if existing.data:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    # Hash password and save
+    hashed_pw = get_password_hash(payload.password)
+    user_doc = {
+        "email": payload.email,
+        "password_hash": hashed_pw,
+        "name": payload.name,
+        "role": payload.role if payload.role in ["client", "admin"] else "client"
+    }
+    user_doc = with_timestamps(user_doc)
+    
+    res = supabase.table("users").insert(user_doc).execute()
+    new_user = handle_db_response(res, single=True)
+    
+    # Remove password hash from response
+    new_user.pop("password_hash", None)
+    return {"message": "User created successfully", "user": new_user}
+
+
+@app.post("/auth/login", response_model=Token)
+def login_user(payload: UserLogin):
+    # Fetch user
+    res = supabase.table("users").select("*").eq("email", payload.email).execute()
+    if not res.data:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    user = res.data[0]
+    
+    # Verify password
+    if not verify_password(payload.password, user["password_hash"]):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    # Generate Token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user["email"], "role": user["role"]},
+        expires_delta=access_token_expires
+    )
+    
+    # Prepare user info for response
+    user_info = {
+        "id": user["id"],
+        "email": user["email"],
+        "name": user["name"],
+        "role": user["role"]
+    }
+    
+    return {"access_token": access_token, "token_type": "bearer", "user": user_info}
+
+
+@app.get("/auth/me")
+def get_my_profile(current_user: dict = Depends(get_current_user)):
+    current_user.pop("password_hash", None)
+    return current_user
+
 
 @app.get("/healthz")
 def health():
     return {"status": "ok", "database": "Supabase Connected"}
 
-
-@app.post("/admin/login")
-def admin_login(payload: LoginPayload):
-    if payload.token != ADMIN_TOKEN:
-        raise HTTPException(status_code=401, detail="Invalid token")
-    return {"token": ADMIN_TOKEN, "message": "Login successful"}
-
+# ==========================================
+# DYNAMIC CRUD ROUTES GENERATOR
+# ==========================================
 
 def create_crud_routes(path: str, table_name: str, model: BaseModel, include_public_filter: bool = False):
-    @app.post(f"/admin/{path}", dependencies=[Depends(check_admin_token)])
+    
+    # Protected Admin Route - Create
+    @app.post(f"/admin/{path}", dependencies=[Depends(require_admin)])
     def create_item(payload: model):
         doc = with_timestamps(payload.model_dump())
         res = supabase.table(table_name).insert(doc).execute()
         return handle_db_response(res, single=True)
 
+    # Public Route - Read All
     @app.get(f"/{path}")
     def list_items(include_unpublished: bool = Query(False)):
         query = supabase.table(table_name).select("*")
@@ -175,24 +291,28 @@ def create_crud_routes(path: str, table_name: str, model: BaseModel, include_pub
         res = query.order("created_at", desc=True).execute()
         return handle_db_response(res)
 
-    @app.get(f"/admin/{path}", dependencies=[Depends(check_admin_token)])
+    # Protected Admin Route - Read All (Unfiltered)
+    @app.get(f"/admin/{path}", dependencies=[Depends(require_admin)])
     def admin_list_items():
         res = supabase.table(table_name).select("*").order("created_at", desc=True).execute()
         return handle_db_response(res)
 
+    # Public Route - Read Single
     @app.get(f"/{path}/{{item_id}}")
     def get_item(item_id: int):
         res = supabase.table(table_name).select("*").eq("id", item_id).execute()
         return handle_db_response(res, single=True)
 
-    @app.put(f"/admin/{path}/{{item_id}}", dependencies=[Depends(check_admin_token)])
+    # Protected Admin Route - Update
+    @app.put(f"/admin/{path}/{{item_id}}", dependencies=[Depends(require_admin)])
     def update_item(item_id: int, payload: model):
         doc = payload.model_dump(exclude_unset=True)
         doc["updated_at"] = datetime.utcnow().isoformat()
         res = supabase.table(table_name).update(doc).eq("id", item_id).execute()
         return handle_db_response(res, single=True)
 
-    @app.delete(f"/admin/{path}/{{item_id}}", dependencies=[Depends(check_admin_token)])
+    # Protected Admin Route - Delete
+    @app.delete(f"/admin/{path}/{{item_id}}", dependencies=[Depends(require_admin)])
     def delete_item(item_id: int):
         res = supabase.table(table_name).delete().eq("id", item_id).execute()
         if not res.data:
@@ -200,6 +320,7 @@ def create_crud_routes(path: str, table_name: str, model: BaseModel, include_pub
         return {"deleted": True, "id": item_id}
 
 
+# Initialize all CRUD routes
 create_crud_routes("pages", "pages", PageModel)
 create_crud_routes("gallery", "gallery", GalleryItemModel)
 create_crud_routes("members", "members", MemberModel)
@@ -211,27 +332,35 @@ create_crud_routes("videos", "videos", VideoModel, include_public_filter=True)
 create_crud_routes("store", "store", StoreItemModel, include_public_filter=True)
 create_crud_routes("donations", "donations", DonationModel)
 
+# ==========================================
+# SPECIFIC / CUSTOM ROUTES
+# ==========================================
 
 @app.get("/pages/slug/{slug}")
 def get_page_by_slug(slug: str):
     res = supabase.table("pages").select("*").eq("slug", slug).execute()
     return handle_db_response(res, single=True)
 
-
 @app.get("/blogs/slug/{slug}")
 def get_blog_by_slug(slug: str):
     res = supabase.table("blogs").select("*").eq("slug", slug).eq("published", True).execute()
     return handle_db_response(res, single=True)
-
 
 @app.get("/events/year/{year}")
 def get_events_by_year(year: int):
     res = supabase.table("events").select("*").eq("year", year).eq("published", True).order("created_at", desc=True).execute()
     return handle_db_response(res)
 
-
 @app.post("/donations/request")
 def create_donation_request(payload: DonationModel):
     doc = with_timestamps(payload.model_dump())
     res = supabase.table("donations").insert(doc).execute()
     return handle_db_response(res, single=True)
+
+# Example of a Client-Only route (Users who are logged in, either admin or client)
+@app.get("/client/dashboard", dependencies=[Depends(require_client)])
+def get_client_dashboard(current_user: dict = Depends(get_current_user)):
+    return {
+        "message": f"Welcome to the client portal, {current_user['name']}!",
+        "role": current_user['role']
+    }
