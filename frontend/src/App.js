@@ -1,11 +1,15 @@
 import "@/App.css";
 import "./i18n";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 
+// Auth Context
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+
+// Pages
 import Home from "./pages/Home";
 import AdminApp from "./admin/AdminApp";
 import About from "./pages/About";
@@ -23,7 +27,40 @@ import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import VideoTour from "./pages/VideoTour";
 import Store from "./pages/Store";
+import AuthPage from "./pages/AuthPage"; // New Auth Page
 
+// ==========================================
+// Protected Route Wrapper
+// ==========================================
+const ProtectedRoute = ({ children, requireAdmin = false }) => {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  // Show a blank screen or a loading spinner while checking auth status
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#F4C430]"></div>
+      </div>
+    );
+  }
+
+  // If not logged in, redirect to login page
+  if (!user) {
+    return <Navigate to="/auth" state={{ from: location }} replace />;
+  }
+
+  // If requires admin but user is a regular client, redirect to home
+  if (requireAdmin && user.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
+// ==========================================
+// Main App Shell
+// ==========================================
 function Shell() {
   const location = useLocation();
   const admin = location.pathname.startsWith("/admin");
@@ -33,6 +70,7 @@ function Shell() {
       {!admin && <Header />}
       <main>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/mahamana" element={<Mahamana />} />
@@ -49,7 +87,19 @@ function Shell() {
           <Route path="/join" element={<Join />} />
           <Route path="/donation" element={<Donation />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/admin/*" element={<AdminApp />} />
+          
+          {/* Authentication Route */}
+          <Route path="/auth" element={<AuthPage />} />
+
+          {/* Protected Admin Routes */}
+          <Route 
+            path="/admin/*" 
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <AdminApp />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </main>
       {!admin && <Footer />}
@@ -58,13 +108,19 @@ function Shell() {
   );
 }
 
+// ==========================================
+// Root Component
+// ==========================================
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <ScrollToTop />
-        <Shell />
-      </BrowserRouter>
+      {/* 1. Wrap everything in the AuthProvider */}
+      <AuthProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Shell />
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }
