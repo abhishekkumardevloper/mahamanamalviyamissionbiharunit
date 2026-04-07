@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from './AuthContext'; // Adjust path as needed
+// FIXED IMPORT PATH HERE:
+import { useAuth } from '../contexts/AuthContext'; 
 import { Mail, Lock, User, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
 
 const AuthPage = () => {
