@@ -1,459 +1,155 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  Heart, Building2, QrCode, ShieldCheck, 
-  Copy, CheckCircle2, Send, AlertCircle
-} from 'lucide-react';
+import { Calendar, Users, GraduationCap, Award, ArrowRight, AlertCircle, Loader2 } from 'lucide-react';
 
-const Donation = () => {
+const Activities = () => {
   const { t, i18n } = useTranslation();
-  const currentLanguage = i18n.language || 'en';
-  const [copiedField, setCopiedField] = useState(null);
+  const currentLanguage = i18n.language;
 
   // Base API URL
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-  // Form State
-  const [formData, setFormData] = useState({
-    amount: '',
-    transactionId: '',
-    donationType: 'One Time Donation',
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobile: '',
-    altPhone: '',
-    address: '',
-    country: '',
-    state: '',
-    city: '',
-    zip: '',
-    message: ''
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Font styling helper for clean typography management
+  const getFont = () => ({
+    fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif'
   });
 
-  // API Submission State
-  const [apiStatus, setApiStatus] = useState({
-    loading: false,
-    success: false,
-    error: null
-  });
+  // Icon pool to cycle through since icons aren't stored in the DB
+  const iconPool = [Calendar, Users, GraduationCap, Award];
 
-  const getFontStyle = () => ({
-    fontFamily: currentLanguage === 'hi' ? 'Noto Sans Devanagari, sans-serif' : 'Poppins, sans-serif',
-  });
-
-  const handleCopy = (text, field) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setApiStatus({ loading: true, success: false, error: null });
-
-    // Combine First and Last name to match backend donor_name
-    const fullName = `${formData.firstName} ${formData.lastName}`.trim();
-
-    // Combine extra fields into the message to prevent data loss 
-    // since the backend model only accepts specific fields
-    const combinedMessage = `
-Type: ${formData.donationType}
-Alt Phone: ${formData.altPhone || 'N/A'}
-Address: ${formData.address}, ${formData.city}, ${formData.state}, ${formData.country} - ${formData.zip}
-Donor Message: ${formData.message || 'None'}
-    `.trim();
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/donations/request`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          donor_name: fullName,
-          email: formData.email || null,
-          phone: formData.mobile || null,
-          amount: parseFloat(formData.amount),
-          transaction_id: formData.transactionId,
-          message: combinedMessage,
-          status: 'submitted'
-        }),
-      });
-
-      if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.detail || 'Failed to submit donation details. Please check your inputs.');
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        // Fetching published activities from the backend
+        const response = await fetch(`${API_BASE_URL}/activities`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch activities data');
+        }
+        const data = await response.json();
+        setActivities(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setApiStatus({ loading: false, success: true, error: null });
-      // Reset form
-      setFormData({
-        amount: '', transactionId: '', donationType: 'One Time Donation',
-        firstName: '', lastName: '', email: '', mobile: '', altPhone: '',
-        address: '', country: '', state: '', city: '', zip: '', message: ''
-      });
-      
-    } catch (error) {
-      setApiStatus({ loading: false, success: false, error: error.message });
-    }
-  };
+    fetchActivities();
+  }, [API_BASE_URL]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111]">
+    <div className="min-h-screen bg-gray-50 selection:bg-[#F4C430] selection:text-[#111111]">
       
-      {/* Hero Header */}
-      <div className="bg-[#111111] py-16 md:py-24 relative overflow-hidden mt-[70px]">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#F4C430]/10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2"></div>
-        
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-2xl backdrop-blur-sm mb-6 border border-white/10 shadow-xl">
-            <Heart className="w-8 h-8 text-[#F4C430] fill-[#F4C430] animate-pulse" />
+      {/* 1. Core Activities Section */}
+      <section className="py-24 relative overflow-hidden bg-white min-h-[80vh]">
+        {/* Decorative background element */}
+        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-gray-50 to-white -z-10"></div>
+        <div className="absolute top-20 right-0 w-64 h-64 bg-[#F4C430]/5 rounded-full blur-3xl"></div>
+
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <span className="text-[#F4C430] font-bold tracking-widest uppercase mb-4 block text-sm" style={getFont()}>
+              Our Initiatives
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#111111] mb-6 leading-tight" style={getFont()}>
+              {t('activities.heading') || "Key Activities"}
+            </h1>
+            <div className="w-24 h-1.5 bg-[#F4C430] mx-auto rounded-full"></div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight" style={getFontStyle()}>
-            Give where it's <span className="text-[#F4C430]">Needed Most</span>
-          </h1>
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style={getFontStyle()}>
-            {t('donation.subtitle') || "Your generous contributions help us sustain our programs and cultivate happiness in society. Every contribution makes a difference."}
-          </p>
-        </div>
-      </div>
 
-      {/* Main Content Area */}
-      <div className="container mx-auto px-4 -mt-8 relative z-20 pb-24 flex-grow">
-        <div className="max-w-6xl mx-auto">
-          
-          {/* TOP SECTION: Payment Methods */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            
-            {/* LEFT COLUMN: Bank Transfer Details */}
-            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 transition-transform duration-300 hover:-translate-y-1">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 bg-[#111111] rounded-2xl flex items-center justify-center shadow-lg">
-                  <Building2 className="w-7 h-7 text-[#F4C430]" />
+          {/* Conditional Rendering based on API State */}
+          {loading ? (
+            // Loading Skeletons
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14">
+              {[1, 2, 3, 4].map((skeleton) => (
+                <div key={skeleton} className="bg-white rounded-[2rem] border border-gray-100 p-6 shadow-sm animate-pulse flex flex-col h-[500px]">
+                  <div className="w-full h-64 bg-gray-200 rounded-2xl mb-8"></div>
+                  <div className="w-3/4 h-8 bg-gray-200 rounded-lg mb-4"></div>
+                  <div className="w-full h-4 bg-gray-200 rounded-lg mb-2"></div>
+                  <div className="w-5/6 h-4 bg-gray-200 rounded-lg mb-2"></div>
+                  <div className="w-4/6 h-4 bg-gray-200 rounded-lg mt-auto"></div>
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-[#111111]" style={getFontStyle()}>NEFT / RTGS Transfer</h2>
-                  <p className="text-gray-500 text-sm">Direct bank account transfer</p>
-                </div>
-              </div>
+              ))}
+            </div>
+          ) : error ? (
+            // Error State
+            <div className="flex flex-col items-center justify-center py-20 bg-red-50 rounded-3xl border border-red-100">
+              <AlertCircle className="w-16 h-16 text-red-400 mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h3>
+              <p className="text-gray-500">{error}</p>
+            </div>
+          ) : activities.length === 0 ? (
+            // Empty State
+            <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
+              <Calendar className="w-16 h-16 text-gray-300 mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 mb-2">No Activities Found</h3>
+              <p className="text-gray-500">We are currently updating our activities schedule. Check back later!</p>
+            </div>
+          ) : (
+            // Data Mapping
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14">
+              {activities.map((activity, index) => {
+                // Dynamically assign an icon from the pool
+                const ActivityIcon = iconPool[index % iconPool.length];
+                
+                // Fallback image if backend image_url is empty
+                const fallbackImage = 'https://images.unsplash.com/photo-1522661067900-ab829854a57f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxzZW1pbmFyfGVufDB8fHx8MTc3MTQxNTA1MHww&ixlib=rb-4.1.0&q=85';
 
-              <div className="space-y-4">
-                {[
-                  { label: 'Beneficiary Name', value: "Mahamana Malviya Mission" },
-                  { label: 'Bank Name', value: 'Punjab National Bank (PNB)' },
-                  { label: 'Account No.', value: '1234567890123456', copyable: true },
-                  { label: 'IFSC Code', value: 'PUNB0123456', copyable: true },
-                  { label: 'Branch', value: 'Patna Main Branch' },
-                  { label: 'Account Type', value: 'Current' }
-                ].map((item, idx) => (
-                  <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-                    <span className="text-gray-500 text-sm font-medium mb-1 sm:mb-0">{item.label}</span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[#111111] font-bold tracking-wide">{item.value}</span>
-                      {item.copyable && (
-                        <button 
-                          onClick={() => handleCopy(item.value, item.label)}
-                          className="p-1.5 text-gray-400 hover:text-[#F4C430] hover:bg-white rounded-md transition-all"
-                          title={`Copy ${item.label}`}
-                        >
-                          {copiedField === item.label ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                        </button>
+                return (
+                  <div
+                    key={activity.id || index}
+                    className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col h-full"
+                  >
+                    {/* Image Container */}
+                    <div className="relative h-64 overflow-hidden bg-gray-100 shrink-0">
+                      <div className="absolute inset-0 bg-[#111111]/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                      <img
+                        src={activity.image_url || fallbackImage}
+                        alt={activity.title}
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 grayscale-[20%] group-hover:grayscale-0"
+                      />
+                      {/* Floating Category/Date Tag (Optional: Since backend provides category/date) */}
+                      {(activity.category || activity.date) && (
+                        <div className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-[#111111] shadow-lg">
+                          {activity.date ? new Date(activity.date).toLocaleDateString() : activity.category}
+                        </div>
                       )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* RIGHT COLUMN: UPI Box */}
-            <div className="bg-gradient-to-br from-[#111111] to-gray-900 rounded-3xl p-8 md:p-10 shadow-2xl text-white relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#F4C430]/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-              
-              <div className="flex items-center gap-4 mb-8 relative z-10">
-                <div className="w-14 h-14 bg-white/10 rounded-2xl backdrop-blur-md flex items-center justify-center border border-white/10">
-                  <QrCode className="w-7 h-7 text-[#F4C430]" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold" style={getFontStyle()}>Scan & Donate</h2>
-                  <p className="text-gray-400 text-sm">Accepts all major UPI apps</p>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center gap-8 relative z-10">
-                <div className="bg-white p-4 rounded-2xl shadow-inner shrink-0">
-                  <img src="/qr.jpeg" alt="Donation QR Code" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
-                </div>
-                
-                <div className="w-full">
-                  <p className="text-gray-400 text-sm mb-2 uppercase tracking-widest font-bold">UPI ID</p>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-white/10 border border-white/10 backdrop-blur-md">
-                    <span className="font-mono font-bold text-lg tracking-wide break-all">7209329329m@pnb</span>
-                    <button 
-                      onClick={() => handleCopy('7209329329m@pnb', 'UPI')}
-                      className="p-2 ml-2 bg-white/10 hover:bg-[#F4C430] hover:text-[#111111] text-white rounded-lg transition-all shrink-0"
-                      title="Copy UPI ID"
-                    >
-                       {copiedField === 'UPI' ? <CheckCircle2 className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* BOTTOM SECTION: Donation Tracking Form */}
-          <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden">
-            <div className="bg-[#F4C430]/10 border-b border-[#F4C430]/20 p-8">
-              <h3 className="text-2xl font-bold text-[#111111] flex items-center gap-2" style={getFontStyle()}>
-                <ShieldCheck className="w-7 h-7 text-[#F4C430]" />
-                Donation Details Form
-              </h3>
-              <p className="text-gray-600 mt-2" style={getFontStyle()}>
-                Already made a contribution? Please fill out this form so we can track your donation and send you a formal receipt.
-              </p>
-            </div>
-
-            {apiStatus.success ? (
-              <div className="p-12 text-center flex flex-col items-center">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle2 className="w-10 h-10 text-green-600" />
-                </div>
-                <h3 className="text-3xl font-bold text-[#111111] mb-4">Thank You for Your Support!</h3>
-                <p className="text-gray-600 max-w-lg mb-8">
-                  Your donation details have been successfully submitted. We will verify the transaction and email your official receipt shortly.
-                </p>
-                <button 
-                  onClick={() => setApiStatus({ loading: false, success: false, error: null })}
-                  className="px-8 py-3 bg-[#111111] text-white rounded-xl hover:bg-[#F4C430] hover:text-[#111111] font-bold transition-all"
-                >
-                  Submit Another Donation
-                </button>
-              </div>
-            ) : (
-              <form className="p-8 md:p-10 space-y-8" onSubmit={handleSubmit}>
-                
-                {apiStatus.error && (
-                  <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-                    <p className="text-sm font-medium">{apiStatus.error}</p>
-                  </div>
-                )}
-
-                {/* Contribution Amount */}
-                <div>
-                  <h4 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Contribution</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Amount Donated (₹) <span className="text-red-500">*</span></label>
-                      <input 
-                        type="number" 
-                        name="amount"
-                        value={formData.amount}
-                        onChange={handleInputChange}
-                        min="1"
-                        placeholder="e.g. 5000" 
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Transaction ID / UTR Number <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" 
-                        name="transactionId"
-                        value={formData.transactionId}
-                        onChange={handleInputChange}
-                        placeholder="Enter Bank or UPI Reference No." 
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all"
-                        required
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="mb-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Donation Type</label>
-                    <div className="flex flex-wrap gap-6">
-                      {['One Time Donation', 'Monthly (Recurring)', 'Quarterly', 'Annually'].map((type, i) => (
-                        <label key={i} className="flex items-center gap-2 cursor-pointer group">
-                          <input 
-                            type="radio" 
-                            name="donationType" 
-                            value={type}
-                            checked={formData.donationType === type}
-                            onChange={handleInputChange}
-                            className="w-4 h-4 text-[#F4C430] focus:ring-[#F4C430] border-gray-300" 
-                          />
-                          <span className="text-gray-600 group-hover:text-[#111111]">{type}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Personal Information */}
-                <div>
-                  <h4 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Personal Information</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">First Name <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" 
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                        required 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Last Name <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" 
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                        required 
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                      <input 
-                        type="email" 
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Mobile No. <span className="text-red-500">*</span></label>
-                      <input 
-                        type="tel" 
-                        name="mobile"
-                        value={formData.mobile}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                        required 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Alternate Phone No.</label>
-                      <input 
-                        type="tel" 
-                        name="altPhone"
-                        value={formData.altPhone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                      />
+                      {/* Floating Icon Badge */}
+                      <div className="absolute bottom-0 left-8 transform translate-y-1/2 z-20">
+                        <div className="w-16 h-16 bg-[#F4C430] rounded-2xl flex items-center justify-center text-[#111111] shadow-lg group-hover:-translate-y-2 transition-transform duration-300 border-4 border-white">
+                          <ActivityIcon className="w-8 h-8" />
+                        </div>
+                      </div>
                     </div>
                     
-                    {/* Address Section */}
-                    <div className="md:col-span-2 mt-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Address</label>
-                      <textarea 
-                        name="address"
-                        value={formData.address}
-                        onChange={handleInputChange}
-                        rows="2" 
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all resize-none"
-                      ></textarea>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-                      <select 
-                        name="country"
-                        value={formData.country}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all bg-white"
-                      >
-                        <option value="">Select Country</option>
-                        <option value="India">India</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                      <input 
-                        type="text" 
-                        name="state"
-                        value={formData.state}
-                        onChange={handleInputChange}
-                        placeholder="e.g. Bihar" 
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                      <input 
-                        type="text" 
-                        name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">ZIP / PIN Code</label>
-                      <input 
-                        type="text" 
-                        name="zip"
-                        value={formData.zip}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all" 
-                      />
+                    {/* Content Container */}
+                    <div className="p-8 pt-12 flex-grow flex flex-col">
+                      <h3 className="text-2xl lg:text-3xl font-bold text-[#111111] mb-4 group-hover:text-[#F4C430] transition-colors" style={getFont()}>
+                        {activity.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed text-lg flex-grow" style={getFont()}>
+                        {activity.description}
+                      </p>
+                      
+                      {/* Subtle Interaction cue */}
+                      <div className="mt-8 flex items-center gap-2 text-[#111111] font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
+                        Explore Program <ArrowRight className="w-4 h-4" />
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                {/* Options */}
-                <div>
-                  <h4 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Options</h4>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Would you like to honor or remember someone with your donation? / Any Message</label>
-                  <textarea 
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows="3" 
-                    placeholder="Leave your message here..." 
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#F4C430] focus:ring-2 focus:ring-[#F4C430]/20 outline-none transition-all resize-none"
-                  ></textarea>
-                </div>
-
-                {/* Submit Button */}
-                <div className="pt-4 border-t">
-                  <button 
-                    type="submit" 
-                    disabled={apiStatus.loading}
-                    className="flex items-center justify-center gap-2 w-full md:w-auto px-8 py-4 bg-[#111111] hover:bg-[#F4C430] text-white hover:text-[#111111] rounded-xl font-bold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
-                  >
-                    {apiStatus.loading ? (
-                      <span className="animate-pulse">Submitting...</span>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Submit Donation Details
-                      </>
-                    )}
-                  </button>
-                  <p className="text-xs text-gray-500 mt-4">
-                    * All fields marked with red asterisks are mandatory. Your data is secure and will only be used for sending donation receipts.
-                  </p>
-                </div>
-              </form>
-            )}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
-      </div>
+      </section>
     </div>
   );
 };
 
-export default Donation;
+export default Activities;
