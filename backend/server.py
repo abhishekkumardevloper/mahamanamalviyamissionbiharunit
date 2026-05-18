@@ -42,6 +42,7 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 # MODELS
 # ==========================================
 
+
 class UserCreate(BaseModel):
     email: EmailStr
     password: str = Field(min_length=6)
